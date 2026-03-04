@@ -968,25 +968,81 @@
             state.isGenerating = true;
             renderChat();
 
-            try {
+try {
                 const isDraw = text.toLowerCase().startsWith('/draw');
                 let aiResponse;
 
                 if (isDraw && state.tier !== 'Free') {
-                    const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
+                    // --- xAI IMAGE GENERATION ---
+                    const url = "https://api.x.ai/v1/images/generations";
                     const res = await fetch(url, { 
                         method: 'POST', 
-                        headers: { 'Content-Type': 'application/json' }, // FIXED HEADER
-                        body: JSON.stringify({ instances: { prompt: text.replace('/draw', '') }, parameters: { sampleCount: 1 } }) 
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${apiKey}` // Fixed: xAI requires Bearer prefix
+                        }, 
+                        body: JSON.stringify({ 
+                            model: "grok-2-image-1212", 
+                            prompt: text.replace('/draw', '').trim() 
+                        }) 
                     });
                     
-                    if (!res.ok) throw new Error("Image Generation Failed.");
+                    if (!res.ok) {
+                        const errorData = await res.json();
+                        throw new Error(errorData.error?.message || "Image Generation Failed.");
+                    }
+                    
                     const data = await res.json();
-                    aiResponse = { type: 'image', url: `data:image/png;base64,${data.predictions[0].bytesBase64Encoded}` };
-                
+                    // Grok returns an array of data objects containing the URL
+                    aiResponse = { type: 'image', url: data.data?.[0]?.url };
+
                 } else if (isDraw && state.tier === 'Free') {
                     aiResponse = { type: 'text', text: "Image generation requires a Pro or Ultra subscription. Upgrade now to use /draw." };
                 } else {
+                    // --- xAI CHAT COMPLETION ---
+                    const fetchUrl = "https://api.x.ai/v1/chat/completions";
+                    
+                    // Convert history to xAI's required format (role/content)
+                    const history = state.messages.slice(-10).map(m => ({
+                        role: m.role === 'bot' ? 'assistant' : 'user',
+                        content: m.text || ''
+                    }));
+
+                    const payload = {
+                        model: "grok-beta", // You can also use "grok-2"
+                        messages: [
+                            { role: "system", content: finalSysPrompt },
+                            ...history
+                        ]
+                    };
+
+                    const res = await fetch(fetchUrl, { 
+                        method: 'POST', 
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${apiKey}` // Fixed: Added Bearer token
+                        }, 
+                        body: JSON.stringify(payload) 
+                    });
+                    
+                    if (!res.ok) {
+                        const errorData = await res.json();
+                        throw new Error(errorData.error?.message || `HTTP Error ${res.status}`);
+                    }
+                    
+                    const data = await res.json();
+                    // xAI response path is data.choices[0].message.content
+                    aiResponse = { type: 'text', text: data.choices?.[0]?.message?.content || "API Error." };
+                }
+
+                state.messages.push({ role: 'bot', ...aiResponse });
+            } catch (e) {
+                state.messages.push({ role: 'bot', type: 'text', text: `⚠️ **API Error:** ${e.message}.` });
+            } finally {
+                state.isGenerating = false;
+                saveState();
+                renderChat();
+            }
                     // Assemble User Context into Prompt
                     let finalSysPrompt = state.sysPromptOverride ? state.sysPromptOverride : SYSTEM_PROMPTS[state.model];
                     finalSysPrompt += `\n\nUSER PROFILE:\nName: ${state.user.name}\nAge: ${state.user.age}\nGender: ${state.user.gender}\nHobbies: ${state.user.hobbies}\nLanguage Pref: ${state.language}\nUse this context to personalize responses.`;
