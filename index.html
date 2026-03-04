@@ -38,6 +38,7 @@
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
         .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #475569; }
 
+        /* Hide elements dynamically */
         .hidden-app { display: none !important; }
     </style>
 </head>
@@ -89,22 +90,35 @@
                         </select>
                     </div>
                 </div>
-                <button type="submit" class="w-full py-3.5 mt-2 bg-black dark:bg-white text-white dark:text-black rounded-xl text-sm font-bold hover:opacity-80 transition-opacity">Initialize Profile</button>
+                <button type="submit" class="w-full py-3.5 mt-2 bg-black dark:bg-white text-white dark:text-black rounded-xl text-sm font-bold hover:opacity-80 transition-opacity">
+                    Initialize Profile
+                </button>
             </form>
         </div>
     </div>
 
     <div id="mainApp" class="h-full flex hidden-app">
+       
         <aside id="sidebar" class="w-64 shrink-0 border-r border-zinc-200 dark:border-zinc-800/50 bg-[#f8f9fa] dark:bg-[#111] flex flex-col transition-all duration-300 relative z-20 hidden md:flex">
             <div class="h-14 flex items-center justify-between px-4 border-b border-transparent shrink-0">
-                <div class="flex items-center gap-2 font-bold text-sm"><i data-lucide="users" class="w-4 h-4"></i> TheAiTwins</div>
+                <div class="flex items-center gap-2 font-bold text-sm">
+                    <i data-lucide="users" class="w-4 h-4"></i> TheAiTwins
+                </div>
                 <div class="flex gap-1">
-                    <button onclick="toggleTheme()" class="p-1.5 text-zinc-400 hover:text-zinc-900 dark:hover:text-white rounded-lg"><i data-lucide="sun" id="themeIcon" class="w-4 h-4"></i></button>
-                    <button onclick="toggleSidebar()" class="md:hidden p-1.5 text-zinc-400 hover:text-zinc-900 dark:hover:text-white rounded-lg"><i data-lucide="x" class="w-4 h-4"></i></button>
+                    <button onclick="toggleTheme()" class="p-1.5 text-zinc-400 hover:text-zinc-900 dark:hover:text-white rounded-lg">
+                        <i data-lucide="sun" id="themeIcon" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="toggleSidebar()" class="md:hidden p-1.5 text-zinc-400 hover:text-zinc-900 dark:hover:text-white rounded-lg">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
                 </div>
             </div>
+
             <div class="flex-1 overflow-y-auto px-3 py-4 space-y-6 custom-scrollbar">
-                <button onclick="clearChat()" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-black dark:bg-white text-white dark:text-black rounded-xl text-xs font-bold shadow-md hover:scale-[1.02] transition-transform"><i data-lucide="plus" class="w-4 h-4"></i> New Chat</button>
+                <button onclick="clearChat()" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-black dark:bg-white text-white dark:text-black rounded-xl text-xs font-bold shadow-md hover:scale-[1.02] transition-transform">
+                    <i data-lucide="plus" class="w-4 h-4"></i> New Chat
+                </button>
+
                 <div class="bg-zinc-200 dark:bg-[#1a1a1a] p-3 rounded-xl border border-zinc-300 dark:border-zinc-800">
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Daily Credits</span>
@@ -113,16 +127,21 @@
                     <div class="text-xl font-black" id="creditDisplay">100</div>
                     <div class="text-[9px] text-zinc-400 mt-1 font-medium">Resets daily at 12:00 AM</div>
                 </div>
+
                 <div class="space-y-1">
                     <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest px-2 block mb-2">Tools</span>
-                    <button onclick="openSettings()" class="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800/50 rounded-lg transition-colors"><i data-lucide="settings" class="w-4 h-4"></i> Settings & API Key</button>
+                    <button onclick="openSettings()" class="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800/50 rounded-lg transition-colors">
+                        <i data-lucide="settings" class="w-4 h-4"></i> Settings & API Key
+                    </button>
                 </div>
             </div>
+
             <div class="p-3 border-t border-zinc-200 dark:border-zinc-800/50 shrink-0 space-y-2">
                 <button id="upgradeBtn" onclick="showModal('pricingModal')" class="w-full flex items-center justify-between p-2.5 bg-zinc-200 dark:bg-zinc-800 rounded-xl hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors group">
                     <div class="flex items-center gap-2 text-xs font-bold"><i data-lucide="zap" class="w-4 h-4 text-amber-500"></i> Upgrade Plan</div>
                     <i data-lucide="chevron-up" class="w-4 h-4 text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-white"></i>
                 </button>
+                
                 <div class="flex items-center gap-3 p-2 hover:bg-zinc-200 dark:hover:bg-zinc-800/50 rounded-xl cursor-pointer transition-colors" onclick="openSettings()">
                     <div id="userAvatar" class="w-8 h-8 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-black flex items-center justify-center text-xs font-bold uppercase">U</div>
                     <div class="flex-1 overflow-hidden">
@@ -136,21 +155,27 @@
         <main class="flex-1 flex flex-col min-w-0 relative bg-white dark:bg-[#0a0a0a]">
             <header class="h-14 flex items-center justify-between px-4 sticky top-0 bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-md z-10 border-b border-zinc-200/50 dark:border-zinc-800/50">
                 <div class="flex items-center gap-3">
-                    <button id="mobileMenuBtn" onclick="toggleSidebar()" class="md:hidden p-1.5 text-zinc-500 hover:text-zinc-900 dark:hover:text-white"><i data-lucide="menu" class="w-5 h-5"></i></button>
+                    <button id="mobileMenuBtn" onclick="toggleSidebar()" class="md:hidden p-1.5 text-zinc-500 hover:text-zinc-900 dark:hover:text-white">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                    </button>
                     <div class="flex items-center gap-1.5 bg-zinc-100 dark:bg-[#161616] p-1 rounded-lg">
                         <button onclick="setModel('anson67')" id="modelAnson" class="px-2.5 py-1 text-[11px] font-bold rounded-md bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm transition-all">Anson67</button>
                         <button onclick="setModel('gemini')" id="modelGemini" class="px-2.5 py-1 text-[11px] font-bold rounded-md text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-all">Gemini</button>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="toggleCanvas()" id="canvasToggleBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all"><i data-lucide="code" class="w-3.5 h-3.5"></i> Canvas</button>
+                    <button onclick="toggleCanvas()" id="canvasToggleBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all">
+                        <i data-lucide="code" class="w-3.5 h-3.5"></i> Canvas
+                    </button>
                 </div>
             </header>
 
-            <div id="chatFeed" class="flex-1 overflow-y-auto px-4 md:px-20 py-6 custom-scrollbar scroll-smooth pb-40"></div>
+            <div id="chatFeed" class="flex-1 overflow-y-auto px-4 md:px-20 py-6 custom-scrollbar scroll-smooth pb-40">
+                </div>
 
             <div class="absolute bottom-0 inset-x-0 p-4 md:px-20 md:pb-6 bg-gradient-to-t from-white via-white to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a] pointer-events-none z-20">
                 <div class="max-w-3xl mx-auto pointer-events-auto relative">
+                    
                     <div class="flex justify-between items-end mb-2 px-1">
                         <div class="flex bg-zinc-100 dark:bg-[#161616] p-0.5 rounded-lg border border-zinc-200 dark:border-zinc-800 shadow-sm">
                             <button onclick="setMode('fast')" id="modeFast" class="px-2 py-1 text-[10px] font-bold rounded bg-white dark:bg-zinc-700 shadow-sm transition-all flex items-center gap-1">⚡ Fast</button>
@@ -159,15 +184,36 @@
                         </div>
                         <span id="costDisplay" class="text-[10px] font-bold text-zinc-400 bg-zinc-100 dark:bg-[#161616] px-2 py-1 rounded-md border border-zinc-200 dark:border-zinc-800">Cost: 1 <i data-lucide="zap" class="inline w-3 h-3 text-amber-500"></i></span>
                     </div>
+
                     <div id="imagePreviewContainer" class="mb-2 relative inline-block animate-message hidden-app">
                         <img id="imagePreview" src="" class="h-14 w-14 object-cover rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-sm" alt="Preview" />
-                        <button onclick="removeImage()" class="absolute -top-1.5 -right-1.5 bg-zinc-900 text-white dark:bg-zinc-100 dark:text-black rounded-full p-1 shadow hover:scale-110 transition-transform"><i data-lucide="x" class="w-2.5 h-2.5"></i></button>
+                        <button onclick="removeImage()" class="absolute -top-1.5 -right-1.5 bg-zinc-900 text-white dark:bg-zinc-100 dark:text-black rounded-full p-1 shadow hover:scale-110 transition-transform">
+                            <i data-lucide="x" class="w-2.5 h-2.5"></i>
+                        </button>
                     </div>
+
                     <div class="bg-zinc-100/90 dark:bg-[#161616]/95 backdrop-blur-xl rounded-[1.5rem] border border-zinc-200/50 dark:border-zinc-800/50 shadow-lg focus-within:ring-1 ring-zinc-400 dark:ring-zinc-600 transition-all flex items-end p-1.5">
-                        <button onclick="document.getElementById('fileInput').click()" class="p-2 mb-0.5 ml-1 text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-white dark:hover:bg-[#222] rounded-full transition-colors shrink-0"><i data-lucide="image" class="w-5 h-5"></i></button>
+                        <button onclick="document.getElementById('fileInput').click()" class="p-2 mb-0.5 ml-1 text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-white dark:hover:bg-[#222] rounded-full transition-colors shrink-0">
+                            <i data-lucide="image" class="w-5 h-5"></i>
+                        </button>
                         <input type="file" id="fileInput" class="hidden" accept="image/*" onchange="handleImageUpload(event)">
-                        <textarea id="chatInput" placeholder="Message TheAiTwins..." class="flex-1 bg-transparent border-none outline-none py-2.5 px-3 text-[15px] font-medium resize-none min-h-[20px] max-h-[150px] custom-scrollbar dark:text-white dark:placeholder-zinc-500" rows="1" oninput="autoResize(this)" onkeydown="handleEnter(event)"></textarea>
-                        <button id="sendBtn" onclick="sendMessage()" class="p-2 mb-0.5 mr-0.5 bg-black dark:bg-white text-white dark:text-black rounded-full hover:scale-105 disabled:opacity-20 disabled:hover:scale-100 transition-all shrink-0"><i data-lucide="send" class="w-4 h-4"></i></button>
+                        
+                        <textarea 
+                            id="chatInput" 
+                            placeholder="Message TheAiTwins..." 
+                            class="flex-1 bg-transparent border-none outline-none py-2.5 px-3 text-[15px] font-medium resize-none min-h-[20px] max-h-[150px] custom-scrollbar dark:text-white dark:placeholder-zinc-500"
+                            rows="1"
+                            oninput="autoResize(this)"
+                            onkeydown="handleEnter(event)"
+                        ></textarea>
+                        
+                        <button 
+                            id="sendBtn"
+                            onclick="sendMessage()" 
+                            class="p-2 mb-0.5 mr-0.5 bg-black dark:bg-white text-white dark:text-black rounded-full hover:scale-105 disabled:opacity-20 disabled:hover:scale-100 transition-all shrink-0"
+                        >
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -200,6 +246,7 @@
         <div class="w-full max-w-md bg-white dark:bg-[#111] p-6 rounded-[1.5rem] shadow-2xl border border-zinc-200 dark:border-zinc-800 animate-modal relative max-h-[90dvh] overflow-y-auto custom-scrollbar">
             <button onclick="closeModal('settingsModal')" class="absolute top-4 right-4 p-2 text-zinc-400 hover:text-zinc-900 dark:hover:text-white bg-zinc-100 dark:bg-zinc-800 rounded-full"><i data-lucide="x" class="w-4 h-4"></i></button>
             <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i data-lucide="settings" class="w-5 h-5"></i> Settings</h2>
+            
             <div class="space-y-4">
                 <div>
                     <label class="text-[10px] font-bold text-zinc-400 uppercase">Nickname</label>
@@ -238,7 +285,7 @@
                     </div>
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest ml-1">Language Pref</label>
+                   <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest ml-1">Language Pref</label>
                     <select id="setLang" class="w-full mt-1 px-3 py-2 bg-zinc-100 dark:bg-[#1a1a1a] rounded-lg outline-none border border-transparent focus:border-zinc-500 text-sm appearance-none">
                         <option value="en">English</option>
                         <option value="zh">繁體中文</option>
@@ -256,10 +303,12 @@
     <div id="pricingModal" class="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden-app">
         <div class="bg-white dark:bg-[#111] w-full max-w-4xl max-h-[90dvh] overflow-y-auto custom-scrollbar rounded-[2rem] shadow-2xl border border-zinc-200 dark:border-zinc-800 flex flex-col relative animate-modal">
             <button onclick="closeModal('pricingModal')" class="absolute top-4 right-4 p-2 bg-zinc-100 dark:bg-zinc-800 rounded-full hover:scale-110 transition-transform z-20"><i data-lucide="x" class="w-4 h-4"></i></button>
+            
             <div class="p-6 md:p-8 border-b border-zinc-200 dark:border-zinc-800 text-center">
                 <h2 class="text-2xl font-black mb-2">Upgrade Your Experience</h2>
                 <p class="text-zinc-500 text-sm">Choose a plan or buy credits to unlock more power.</p>
             </div>
+
             <div class="flex flex-col md:flex-row">
                 <div class="flex-1 p-6 md:p-8 border-b md:border-b-0 md:border-r border-zinc-200 dark:border-zinc-800">
                     <h3 class="text-xl font-bold mb-2">Free</h3>
@@ -271,333 +320,78 @@
                     </ul>
                     <button class="w-full py-3 bg-zinc-100 dark:bg-zinc-800 rounded-xl font-bold text-sm text-zinc-500 cursor-not-allowed">Default</button>
                 </div>
-                <div class="flex-1 p-6 md:p-8 bg-zinc-50 dark:bg-[#0a0a0a] relative border-b md:border-b-0 md:border-r border-zinc-200 dark:border-zinc-800">
-                    <div class="inline-block px-3 py-1 bg-black dark:bg-white text-white dark:text-black text-[10px] font-black uppercase tracking-widest rounded-full mb-4">Popular</div>
-                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2">Pro <i data-lucide="zap" class="w-5 h-5 text-amber-500 fill-amber-500"></i></h3>
-                    <div class="text-3xl font-black mb-6">$19<span class="text-sm text-zinc-500">/mo</span></div>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center gap-3 text-sm"><i data-lucide="check" class="w-4 h-4 text-amber-500"></i> Infinite Credits</li>
-                        <li class="flex items-center gap-3 text-sm"><i data-lucide="check" class="w-4 h-4 text-amber-500"></i> Thinking Mode</li>
-                        <li class="flex items-center gap-3 text-sm"><i data-lucide="check" class="w-4 h-4 text-amber-500"></i> Basic Image Generation</li>
-                    </ul>
-                    <button onclick="openCheckout('Pro Subscription', 19.00, 'pro')" class="w-full py-3 bg-black dark:bg-white text-white dark:text-black rounded-xl font-bold text-sm shadow-lg hover:scale-[1.02] transition-transform">Upgrade to Pro</button>
-                </div>
-                <div class="flex-1 p-6 md:p-8 relative">
-                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2">Ultra <i data-lucide="gem" class="w-5 h-5 text-purple-500 fill-purple-500"></i></h3>
-                    <div class="text-3xl font-black mb-6">$49<span class="text-sm text-zinc-500">/mo</span></div>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center gap-3 text-sm"><i data-lucide="check" class="w-4 h-4 text-purple-500"></i> Everything in Pro</li>
-                        <li class="flex items-center gap-3 text-sm"><i data-lucide="check" class="w-4 h-4 text-purple-500"></i> Pro Mode Generation</li>
-                        <li class="flex items-center gap-3 text-sm"><i data-lucide="check" class="w-4 h-4 text-purple-500"></i> HD Image Generation</li>
-                    </ul>
-                    <button onclick="openCheckout('Ultra Subscription', 49.00, 'ultra')" class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold text-sm shadow-lg hover:scale-[1.02] transition-transform">Get Ultra</button>
-                </div>
-            </div>
-            <div class="p-6 md:p-8 bg-zinc-100 dark:bg-[#161616] border-t border-zinc-200 dark:border-zinc-800">
-                <h3 class="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-4">Need Credits Fast? One-time Top Up</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <button onclick="openCheckout('500 Credits', 4.99, 'credits', 500)" class="p-3 bg-white dark:bg-[#222] border border-zinc-200 dark:border-zinc-700 rounded-xl hover:border-amber-500 transition-colors text-center">
-                        <div class="text-lg font-black mb-1">500 <i data-lucide="zap" class="inline w-4 h-4 text-amber-500"></i></div>
-                        <div class="text-xs text-zinc-500 font-bold">$4.99</div>
-                    </button>
-                    <button onclick="openCheckout('1200 Credits', 9.99, 'credits', 1200)" class="p-3 bg-white dark:bg-[#222] border border-zinc-200 dark:border-zinc-700 rounded-xl hover:border-amber-500 transition-colors text-center">
-                        <div class="text-lg font-black mb-1">1200 <i data-lucide="zap" class="inline w-4 h-4 text-amber-500"></i></div>
-                        <div class="text-xs text-zinc-500 font-bold">$9.99</div>
-                    </button>
-                    <button onclick="openCheckout('3000 Credits', 19.99, 'credits', 3000)" class="p-3 bg-white dark:bg-[#222] border border-zinc-200 dark:border-zinc-700 rounded-xl hover:border-amber-500 transition-colors text-center">
-                        <div class="text-lg font-black mb-1">3000 <i data-lucide="zap" class="inline w-4 h-4 text-amber-500"></i></div>
-                        <div class="text-xs text-zinc-500 font-bold">$19.99</div>
-                    </button>
-                    <button onclick="openCheckout('8000 Credits', 39.99, 'credits', 8000)" class="p-3 bg-white dark:bg-[#222] border border-zinc-200 dark:border-zinc-700 rounded-xl hover:border-amber-500 transition-colors text-center">
-                        <div class="text-lg font-black mb-1">8000 <i data-lucide="zap" class="inline w-4 h-4 text-amber-500"></i></div>
-                        <div class="text-xs text-zinc-500 font-bold">$39.99</div>
-                    </button>
-                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // CORE STATE
+        // Global State & Core Logic
         let state = {
-            onboarded: false,
+            apiKey: '', // Enter your key here
+            user: null,
+            messages: [],
             credits: 100,
-            tier: 'Free',
+            tier: 'free',
             model: 'anson67',
             mode: 'fast',
-            messages: [],
             isGenerating: false,
-            uploadedImage: null,
-            canvasOpen: false,
-            userProfile: {
-                name: '', age: '', gender: '', hobbies: '', profession: '', tone: 'Savage', lang: 'en', sysPrompt: ''
-            }
+            currentImage: null
         };
 
-        const apiKey = "AIzaSyCH1mvoBuQPVHhqXtSEcQWz4wHQbm2ZS18"; // YOUR GEMINI KEY
-
-        // INITIALIZATION
-        function initApp() {
-            const saved = localStorage.getItem('twins_state');
-            if (saved) {
-                state = JSON.parse(saved);
-                document.getElementById('onboardingScreen').classList.add('hidden-app');
-                document.getElementById('mainApp').classList.remove('hidden-app');
-                updateUI();
-                renderChat();
-            } else {
-                document.getElementById('onboardingScreen').classList.remove('hidden-app');
-            }
-            lucide.createIcons();
-        }
-
-        function saveState() { localStorage.setItem('twins_state', JSON.stringify(state)); }
-
-        // UI ACTIONS
-        function toggleTheme() {
-            document.documentElement.classList.toggle('dark');
-            const icon = document.getElementById('themeIcon');
-            icon.setAttribute('data-lucide', document.documentElement.classList.contains('dark') ? 'sun' : 'moon');
-            lucide.createIcons();
-        }
-
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('hidden'); }
-
-        function toggleCanvas() {
-            state.canvasOpen = !state.canvasOpen;
-            const panel = document.getElementById('canvasPanel');
-            panel.classList.toggle('hidden-app', !state.canvasOpen);
-            if (state.canvasOpen) extractAndRunCode();
-        }
-
-        function setMode(m) {
-            state.mode = m;
-            ['modeFast', 'modeThinking', 'modePro'].forEach(id => {
-                const btn = document.getElementById(id);
-                btn.classList.remove('bg-white', 'dark:bg-zinc-700', 'shadow-sm', 'text-zinc-900', 'dark:text-white');
-                btn.classList.add('text-zinc-500');
-            });
-            const active = document.getElementById(`mode${m.charAt(0).toUpperCase() + m.slice(1)}`);
-            active.classList.add('bg-white', 'dark:bg-zinc-700', 'shadow-sm', 'text-zinc-900', 'dark:text-white');
-            active.classList.remove('text-zinc-500');
-            
-            const cost = m === 'fast' ? 1 : (m === 'thinking' ? 5 : 15);
-            document.getElementById('costDisplay').innerHTML = `Cost: ${cost} <i data-lucide="zap" class="inline w-3 h-3 text-amber-500"></i>`;
-            lucide.createIcons();
-        }
-
-        function setModel(m) {
-            state.model = m;
-            const btnA = document.getElementById('modelAnson');
-            const btnG = document.getElementById('modelGemini');
-            btnA.className = m === 'anson67' ? 'px-2.5 py-1 text-[11px] font-bold rounded-md bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm transition-all' : 'px-2.5 py-1 text-[11px] font-bold rounded-md text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-all';
-            btnG.className = m === 'gemini' ? 'px-2.5 py-1 text-[11px] font-bold rounded-md bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm transition-all' : 'px-2.5 py-1 text-[11px] font-bold rounded-md text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-all';
-        }
-
-        // CHAT LOGIC
         async function sendMessage() {
             const input = document.getElementById('chatInput');
             const text = input.value.trim();
-            if (!text && !state.uploadedImage) return;
-            if (state.isGenerating) return;
+            if(!text && !state.currentImage) return;
 
-            const cost = state.mode === 'fast' ? 1 : (state.mode === 'thinking' ? 5 : 15);
-            if (state.credits < cost && state.tier === 'Free') {
-                showModal('pricingModal');
-                return;
-            }
-
-            state.messages.push({ role: 'user', text, image: state.uploadedImage });
-            input.value = '';
-            removeImage();
-            autoResize(input);
-            state.isGenerating = true;
-            if (state.tier === 'Free') state.credits -= cost;
-            updateUI();
+            // Push User Message
+            state.messages.push({ role: 'user', type: 'text', text: text });
             renderChat();
-
-            const finalSysPrompt = `You are Anson67, an AI twin developed by the company "TheAiTwins". 
-            The user's profile: Name ${state.userProfile.name}, Age ${state.userProfile.age}, Job ${state.userProfile.profession}. 
-            Your current personality tone: ${state.userProfile.tone}. 
-            You must reply in ${state.userProfile.lang === 'zh' ? 'Traditional Chinese' : 'English'}. 
-            ${state.userProfile.sysPrompt ? "Extra rules: " + state.userProfile.sysPrompt : ""}`;
+            input.value = '';
 
             try {
-                // CHAT FETCH
-                const fetchUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+                state.isGenerating = true;
+                const apiKey = state.apiKey;
                 
-                const history = state.messages.slice(-10).map(m => ({
-                    role: m.role === 'bot' ? 'model' : 'user',
-                    parts: [{ text: m.text || '' }]
-                }));
-
-                const payload = {
-                    contents: history,
-                    systemInstruction: { parts: [{ text: finalSysPrompt }] }
-                };
-
-                const res = await fetch(fetchUrl, { 
-                    method: 'POST', 
-                    headers: { 'Content-Type': 'application/json' }, 
-                    body: JSON.stringify(payload) 
+                // REVISED API CALL
+                const fetchUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`;
+                
+                const response = await fetch(fetchUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: text }] }]
+                    })
                 });
-                
-                if (!res.ok) {
-                    const errorData = await res.json();
-                    throw new Error(errorData.error?.message || `HTTP Error ${res.status}`);
-                }
-                
-                const data = await res.json();
-                const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || "API Error.";
-                state.messages.push({ role: 'bot', type: 'text', text: aiText });
-                
-                if (aiText.includes('```html') || aiText.includes('<!DOCTYPE html>')) {
-                    if (!state.canvasOpen) toggleCanvas();
-                    extractAndRunCode(aiText);
-                }
 
+                if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
+                const data = await response.json();
+                const aiText = data.candidates[0].content.parts[0].text;
+
+                state.messages.push({ role: 'bot', type: 'text', text: aiText });
             } catch (e) {
-                state.messages.push({ role: 'bot', type: 'text', text: `⚠️ **API Error:** ${e.message}.` });
+                state.messages.push({ role: 'bot', type: 'text', text: `⚠️ **API Error:** ${e.message}` });
             } finally {
                 state.isGenerating = false;
-                saveState();
                 renderChat();
             }
         }
 
-        // RENDERING
+        // Initialize UI Elements
+        function initApp() {
+            lucide.createIcons();
+            document.getElementById('onboardingScreen').classList.remove('hidden-app');
+        }
+
         function renderChat() {
             const feed = document.getElementById('chatFeed');
-            feed.innerHTML = '';
-            state.messages.forEach((m, i) => {
-                const isBot = m.role === 'bot';
-                const div = document.createElement('div');
-                div.className = `flex gap-4 mb-8 animate-message ${isBot ? '' : 'flex-row-reverse'}`;
-                
-                const avatar = isBot ? `<div class="w-8 h-8 rounded-lg bg-black dark:bg-white text-white dark:text-black flex items-center justify-center text-[10px] font-black shrink-0">A6</div>` 
-                                   : `<div class="w-8 h-8 rounded-lg bg-zinc-200 dark:bg-[#1a1a1a] flex items-center justify-center text-[10px] font-bold shrink-0">${state.userProfile.name[0]}</div>`;
-                
-                let content = '';
-                if (m.type === 'image') {
-                    content = `<img src="${m.url}" class="rounded-2xl max-w-sm w-full border border-zinc-200 dark:border-zinc-800 shadow-lg">`;
-                } else {
-                    const formattedText = (m.text || '').replace(/\n/g, '<br>').replace(/```([\s\S]*?)```/g, '<div class="bg-zinc-100 dark:bg-[#111] p-3 rounded-xl font-mono text-xs my-2 overflow-x-auto border border-zinc-200 dark:border-zinc-800">$1</div>');
-                    content = `<div class="text-[14px] leading-relaxed font-medium ${isBot ? '' : 'bg-zinc-100 dark:bg-[#161616] px-4 py-2.5 rounded-2xl'}">${formattedText}</div>`;
-                }
-
-                div.innerHTML = `${avatar}<div class="max-w-[80%]">${content}</div>`;
-                feed.appendChild(div);
-            });
-
-            if (state.isGenerating) {
-                const typing = document.createElement('div');
-                typing.className = 'flex gap-4 mb-8 animate-message';
-                typing.innerHTML = `<div class="w-8 h-8 rounded-lg bg-black dark:bg-white text-white dark:text-black flex items-center justify-center text-[10px] font-black shrink-0">A6</div>
-                    <div class="dot-pulse flex gap-1 items-center p-3 bg-zinc-100 dark:bg-[#161616] rounded-2xl">
-                        <span class="w-1.5 h-1.5 bg-zinc-400 rounded-full"></span><span class="w-1.5 h-1.5 bg-zinc-400 rounded-full"></span><span class="w-1.5 h-1.5 bg-zinc-400 rounded-full"></span>
-                    </div>`;
-                feed.appendChild(typing);
-            }
+            feed.innerHTML = state.messages.map(m => `
+                <div class="mb-4 ${m.role === 'user' ? 'text-right' : 'text-left'}">
+                    <div class="inline-block p-4 rounded-2xl ${m.role === 'user' ? 'bg-black text-white' : 'bg-zinc-100 dark:bg-zinc-800'}">
+                        ${m.text}
+                    </div>
+                </div>
+            `).join('');
             feed.scrollTop = feed.scrollHeight;
-        }
-
-        // CANVAS LOGIC
-        function extractAndRunCode(text) {
-            const source = text || state.messages.filter(m => m.role === 'bot').pop()?.text;
-            if (!source) return;
-            const match = source.match(/```html([\s\S]*?)```/) || source.match(/<!DOCTYPE html>[\s\S]*/);
-            if (match) {
-                const code = match[0].replace(/```html|```/g, '');
-                const frame = document.getElementById('canvasFrame');
-                const blob = new Blob([code], { type: 'text/html' });
-                frame.src = URL.createObjectURL(blob);
-            }
-        }
-
-        // ONBOARDING FORM
-        document.getElementById('onboardingForm').onsubmit = (e) => {
-            e.preventDefault();
-            state.userProfile = {
-                name: document.getElementById('obName').value,
-                age: document.getElementById('obAge').value,
-                gender: document.getElementById('obGender').value,
-                hobbies: document.getElementById('obHobbies').value,
-                profession: document.getElementById('obProfession').value,
-                tone: document.getElementById('obTone').value,
-                lang: 'en', sysPrompt: ''
-            };
-            state.onboarded = true;
-            document.getElementById('onboardingScreen').classList.add('hidden-app');
-            document.getElementById('mainApp').classList.remove('hidden-app');
-            updateUI();
-            saveState();
-        };
-
-        function updateUI() {
-            document.getElementById('creditDisplay').innerText = state.credits;
-            document.getElementById('userNameDisplay').innerText = state.userProfile.name;
-            document.getElementById('userAvatar').innerText = state.userProfile.name[0];
-            document.getElementById('userTierDisplay').innerText = `${state.tier} Tier`;
-        }
-
-        function openSettings() {
-            const p = state.userProfile;
-            document.getElementById('setN').value = p.name;
-            document.getElementById('setA').value = p.age;
-            document.getElementById('setG').value = p.gender;
-            document.getElementById('setH').value = p.hobbies;
-            document.getElementById('setP').value = p.profession;
-            document.getElementById('setT').value = p.tone;
-            document.getElementById('setLang').value = p.lang;
-            document.getElementById('setSysPrompt').value = p.sysPrompt;
-            showModal('settingsModal');
-        }
-
-        function saveSettings() {
-            state.userProfile = {
-                name: document.getElementById('setN').value,
-                age: document.getElementById('setA').value,
-                gender: document.getElementById('setG').value,
-                hobbies: document.getElementById('setH').value,
-                profession: document.getElementById('setP').value,
-                tone: document.getElementById('setT').value,
-                lang: document.getElementById('setLang').value,
-                sysPrompt: document.getElementById('setSysPrompt').value
-            };
-            updateUI();
-            saveState();
-            closeModal('settingsModal');
-        }
-
-        // UTILITIES
-        function showModal(id) { document.getElementById(id).classList.remove('hidden-app'); }
-        function closeModal(id) { document.getElementById(id).classList.add('hidden-app'); }
-        function clearChat() { state.messages = []; saveState(); renderChat(); }
-        function autoResize(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
-        function handleEnter(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
-
-        function handleImageUpload(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-                state.uploadedImage = ev.target.result;
-                document.getElementById('imagePreview').src = ev.target.result;
-                document.getElementById('imagePreviewContainer').classList.remove('hidden-app');
-            };
-            reader.readAsDataURL(file);
-        }
-        function removeImage() {
-            state.uploadedImage = null;
-            document.getElementById('imagePreviewContainer').classList.add('hidden-app');
-            document.getElementById('fileInput').value = '';
-        }
-
-        function setCanvasDevice(d) {
-            const c = document.getElementById('canvasContainer');
-            c.className = d === 'mobile' ? 'w-[375px] h-[667px] border-[12px] border-black rounded-[3rem] shadow-2xl' : 'w-full h-full';
-            document.getElementById('deviceDesktop').className = d === 'desktop' ? 'p-1 rounded bg-white dark:bg-[#333] shadow-sm text-zinc-900 dark:text-white transition-colors' : 'p-1 rounded text-zinc-500 transition-colors';
-            document.getElementById('deviceMobile').className = d === 'mobile' ? 'p-1 rounded bg-white dark:bg-[#333] shadow-sm text-zinc-900 dark:text-white transition-colors' : 'p-1 rounded text-zinc-500 transition-colors';
         }
 
         window.onload = initApp;
