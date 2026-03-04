@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anson Ai</title>
+    <title>TheAiTwins</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -44,7 +44,7 @@
         .hidden-app { display: none !important; }
     </style>
 </head>
-<body class="bg-white dark:bg-[#0a0a0a] text-zinc-900 dark:text-zinc-100 font-sans h-screen overflow-hidden transition-colors duration-300">
+<body class="bg-white dark:bg-[#0a0a0a] text-zinc-900 dark:text-zinc-100 font-sans h-[100dvh] overflow-hidden flex transition-colors duration-300">
 
     <!-- ========================================== -->
     <!-- 1. ONBOARDING SCREEN -->
@@ -54,8 +54,8 @@
             <div class="w-16 h-16 bg-black dark:bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl transform rotate-3 hover:rotate-0 transition-all">
                 <i data-lucide="cpu" class="text-white dark:text-black w-8 h-8"></i>
             </div>
-            <h1 class="text-2xl font-bold text-center mb-2">Welcome to Studio</h1>
-            <p class="text-zinc-500 text-xs text-center mb-6">Enter your workspace </p>
+            <h1 class="text-2xl font-bold text-center mb-2">Welcome to TheAiTwins</h1>
+            <p class="text-zinc-500 text-xs text-center mb-6">Initialize your workspace profile</p>
             
             <form id="onboardingForm" class="space-y-4">
                 <div>
@@ -82,7 +82,7 @@
                     <input type="text" id="obHobbies" required class="w-full mt-1 px-4 py-3 bg-zinc-100 dark:bg-[#1a1a1a] rounded-xl outline-none border border-transparent focus:border-zinc-300 dark:focus:border-zinc-600 transition-all text-sm font-semibold" placeholder="Coding, Gaming, Edging...">
                 </div>
                 <button type="submit" class="w-full py-3.5 mt-2 bg-black dark:bg-white text-white dark:text-black rounded-xl text-sm font-bold hover:opacity-80 transition-opacity">
-                    Set Profile
+                    Initialize Profile
                 </button>
             </form>
         </div>
@@ -97,7 +97,7 @@
         <aside id="sidebar" class="w-64 shrink-0 border-r border-zinc-200 dark:border-zinc-800/50 bg-[#f8f9fa] dark:bg-[#111] flex flex-col transition-all duration-300 relative z-20 hidden md:flex">
             <div class="h-14 flex items-center justify-between px-4 border-b border-transparent shrink-0">
                 <div class="flex items-center gap-2 font-bold text-sm">
-                    <i data-lucide="cpu" class="w-4 h-4"></i> Studio
+                    <i data-lucide="cpu" class="w-4 h-4"></i> TheAiTwins
                 </div>
                 <div class="flex gap-1">
                     <button onclick="toggleTheme()" class="p-1.5 text-zinc-400 hover:text-zinc-900 dark:hover:text-white rounded-lg">
@@ -127,7 +127,7 @@
                 <div class="space-y-1">
                     <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest px-2 block mb-2">Tools</span>
                     <button onclick="openSettings()" class="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800/50 rounded-lg transition-colors">
-                        <i data-lucide="settings" class="w-4 h-4"></i> Profile Settings
+                        <i data-lucide="settings" class="w-4 h-4"></i> Settings & API Key
                     </button>
                 </div>
             </div>
@@ -149,9 +149,9 @@
         </aside>
 
         <!-- MAIN CHAT AREA -->
-        <main class="flex-1 flex flex-col min-w-0 relative bg-white dark:bg-[#0a0a0a]">
+        <main class="flex-1 flex flex-col min-w-0 bg-white dark:bg-[#0a0a0a] h-full relative">
             <!-- Top Nav -->
-            <header class="h-14 flex items-center justify-between px-4 sticky top-0 bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-md z-10 border-b border-zinc-200/50 dark:border-zinc-800/50">
+            <header class="shrink-0 h-14 flex items-center justify-between px-4 bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-md z-10 border-b border-zinc-200/50 dark:border-zinc-800/50">
                 <div class="flex items-center gap-3">
                     <button id="mobileMenuBtn" onclick="toggleSidebar()" class="md:hidden p-1.5 text-zinc-500 hover:text-zinc-900 dark:hover:text-white">
                         <i data-lucide="menu" class="w-5 h-5"></i>
@@ -169,13 +169,13 @@
             </header>
 
             <!-- Chat Feed -->
-            <div id="chatFeed" class="flex-1 overflow-y-auto px-4 md:px-20 py-6 custom-scrollbar scroll-smooth pb-40">
+            <div id="chatFeed" class="flex-1 overflow-y-auto px-4 md:px-20 py-6 custom-scrollbar scroll-smooth">
                 <!-- Messages will be injected here -->
             </div>
 
             <!-- INPUT BAR -->
-            <div class="absolute bottom-0 inset-x-0 p-4 md:px-20 md:pb-6 bg-gradient-to-t from-white via-white to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a] pointer-events-none z-20">
-                <div class="max-w-3xl mx-auto pointer-events-auto relative">
+            <div class="shrink-0 p-4 md:px-20 bg-white dark:bg-[#0a0a0a] border-t border-zinc-200 dark:border-zinc-800 z-20">
+                <div class="max-w-3xl mx-auto relative">
                     
                     <!-- Mode Selector & Cost info -->
                     <div class="flex justify-between items-end mb-2 px-1">
@@ -202,7 +202,7 @@
                         
                         <textarea 
                             id="chatInput" 
-                            placeholder="Message Studio..." 
+                            placeholder="Message TheAiTwins..." 
                             class="flex-1 bg-transparent border-none outline-none py-2.5 px-3 text-[15px] font-medium resize-none min-h-[20px] max-h-[150px] custom-scrollbar dark:text-white dark:placeholder-zinc-500"
                             rows="1"
                             oninput="autoResize(this)"
@@ -251,11 +251,11 @@
 
     <!-- Settings Modal -->
     <div id="settingsModal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 hidden-app">
-        <div class="w-full max-w-md bg-white dark:bg-[#111] p-6 rounded-[1.5rem] shadow-2xl border border-zinc-200 dark:border-zinc-800 animate-modal relative">
+        <div class="w-full max-w-md bg-white dark:bg-[#111] p-6 rounded-[1.5rem] shadow-2xl border border-zinc-200 dark:border-zinc-800 animate-modal relative max-h-[90vh] overflow-y-auto custom-scrollbar">
             <button onclick="closeModal('settingsModal')" class="absolute top-4 right-4 p-2 text-zinc-400 hover:text-zinc-900 dark:hover:text-white bg-zinc-100 dark:bg-zinc-800 rounded-full"><i data-lucide="x" class="w-4 h-4"></i></button>
-            <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i data-lucide="settings" class="w-5 h-5"></i> Profile Settings</h2>
+            <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i data-lucide="settings" class="w-5 h-5"></i> Settings</h2>
             
-            <div class="space-y-3">
+            <div class="space-y-4">
                 <div>
                     <label class="text-[10px] font-bold text-zinc-400 uppercase">Nickname</label>
                     <input type="text" id="setN" class="w-full mt-1 px-3 py-2 bg-zinc-100 dark:bg-[#1a1a1a] rounded-lg outline-none border border-transparent focus:border-zinc-500 text-sm">
@@ -278,38 +278,135 @@
                     <label class="text-[10px] font-bold text-zinc-400 uppercase">Hobbies</label>
                     <input type="text" id="setH" class="w-full mt-1 px-3 py-2 bg-zinc-100 dark:bg-[#1a1a1a] rounded-lg outline-none border border-transparent focus:border-zinc-500 text-sm">
                 </div>
-                <button onclick="saveSettings()" class="w-full py-2.5 mt-4 bg-black dark:bg-white text-white dark:text-black rounded-lg text-sm font-bold">Save Changes</button>
+                <div>
+                    <label class="text-[10px] font-bold text-zinc-400 uppercase">App Language</label>
+                    <select id="setLang" class="w-full mt-1 px-3 py-2 bg-zinc-100 dark:bg-[#1a1a1a] rounded-lg outline-none border border-transparent focus:border-zinc-500 text-sm">
+                        <option value="en">English</option>
+                        <option value="zh">Chinese (Traditional)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-zinc-400 uppercase">Custom System Prompt (Override)</label>
+                    <textarea id="setSysPrompt" rows="3" class="w-full mt-1 px-3 py-2 bg-zinc-100 dark:bg-[#1a1a1a] rounded-lg outline-none border border-transparent focus:border-zinc-500 text-sm custom-scrollbar" placeholder="Leave empty for default persona..."></textarea>
+                </div>
+                <button onclick="saveSettings()" class="w-full py-2.5 mt-4 bg-black dark:bg-white text-white dark:text-black rounded-lg text-sm font-bold shadow-md hover:scale-[1.02] transition-transform">Save Changes</button>
             </div>
         </div>
     </div>
 
     <!-- Pricing Modal -->
     <div id="pricingModal" class="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden-app">
-        <div class="bg-white dark:bg-[#111] w-full max-w-3xl rounded-[2rem] shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden flex flex-col md:flex-row relative animate-modal">
+        <div class="bg-white dark:bg-[#111] w-full max-w-4xl rounded-[2rem] shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden flex flex-col md:flex-row relative animate-modal max-h-[90vh] overflow-y-auto custom-scrollbar">
             <button onclick="closeModal('pricingModal')" class="absolute top-4 right-4 p-2 bg-zinc-100 dark:bg-zinc-800 rounded-full hover:scale-110 transition-transform z-20"><i data-lucide="x" class="w-4 h-4"></i></button>
             
-            <div class="flex-1 p-8 border-b md:border-b-0 md:border-r border-zinc-200 dark:border-zinc-800">
-                <h3 class="text-xl font-bold mb-2">Basic Tier</h3>
-                <div class="text-3xl font-black mb-6">Free</div>
-                <ul class="space-y-4 mb-8">
+            <div class="flex-1 p-8 border-b md:border-b-0 md:border-r border-zinc-200 dark:border-zinc-800 flex flex-col">
+                <h3 class="text-xl font-bold mb-2">Free Tier</h3>
+                <div class="text-3xl font-black mb-6">$0</div>
+                <ul class="space-y-4 mb-8 flex-1">
                     <li class="flex items-center gap-3 text-sm"><i data-lucide="check" class="w-4 h-4 text-zinc-900 dark:text-white"></i> 100 Credits Daily</li>
                     <li class="flex items-center gap-3 text-sm"><i data-lucide="check" class="w-4 h-4 text-zinc-900 dark:text-white"></i> Standard & Fast Modes</li>
                     <li class="flex items-center gap-3 text-sm text-zinc-400"><i data-lucide="x" class="w-4 h-4"></i> No Image Generation</li>
                 </ul>
-                <button onclick="closeModal('pricingModal')" class="w-full py-3 bg-zinc-100 dark:bg-zinc-800 rounded-xl font-bold text-sm">Current Plan</button>
+                <button onclick="closeModal('pricingModal')" class="w-full py-3 bg-zinc-100 dark:bg-zinc-800 rounded-xl font-bold text-sm mt-auto">Current Plan</button>
             </div>
 
-            <div class="flex-1 p-8 bg-zinc-50 dark:bg-[#0a0a0a] relative overflow-hidden">
-                <div class="inline-block px-3 py-1 bg-black dark:bg-white text-white dark:text-black text-[10px] font-black uppercase tracking-widest rounded-full mb-4">God Mode</div>
-                <h3 class="text-xl font-bold mb-2 flex items-center gap-2">Studio Pro <i data-lucide="zap" class="w-5 h-5 text-amber-500 fill-amber-500"></i></h3>
+            <div class="flex-1 p-8 bg-zinc-50 dark:bg-[#0f0f0f] border-b md:border-b-0 md:border-r border-zinc-200 dark:border-zinc-800 flex flex-col relative">
+                <div class="absolute top-0 inset-x-0 h-1 bg-amber-500"></div>
+                <div class="inline-block px-3 py-1 bg-black dark:bg-white text-white dark:text-black text-[10px] font-black uppercase tracking-widest rounded-full mb-4 w-max">Most Popular</div>
+                <h3 class="text-xl font-bold mb-2 flex items-center gap-2">Studio Pro</h3>
                 <div class="text-3xl font-black mb-6">$19<span class="text-sm text-zinc-500">/mo</span></div>
-                <ul class="space-y-4 mb-8">
+                <ul class="space-y-4 mb-8 flex-1">
                     <li class="flex items-center gap-3 text-sm"><i data-lucide="check" class="w-4 h-4 text-amber-500"></i> Infinite Credits</li>
                     <li class="flex items-center gap-3 text-sm"><i data-lucide="check" class="w-4 h-4 text-amber-500"></i> Pro & Thinking Modes</li>
                     <li class="flex items-center gap-3 text-sm"><i data-lucide="check" class="w-4 h-4 text-amber-500"></i> Image Generation (/draw)</li>
                 </ul>
-                <button onclick="upgradeToPro()" class="w-full py-3 bg-black dark:bg-white text-white dark:text-black rounded-xl font-bold text-sm shadow-lg">Upgrade Now</button>
+                <button onclick="openCheckout('plan', 'pro', '$19.00')" class="w-full py-3 bg-black dark:bg-white text-white dark:text-black rounded-xl font-bold text-sm shadow-lg mt-auto">Upgrade to Pro</button>
             </div>
+
+            <div class="flex-1 p-8 bg-zinc-100 dark:bg-[#161616] flex flex-col">
+                <h3 class="text-xl font-bold mb-2 flex items-center gap-2">Buy Credits <i data-lucide="coins" class="w-5 h-5 text-yellow-500"></i></h3>
+                <p class="text-xs text-zinc-500 mb-6">Need more power without a sub?</p>
+                
+                <div class="space-y-3 flex-1">
+                    <button onclick="openCheckout('credits', 500, '$4.99')" class="w-full flex items-center justify-between p-3 bg-white dark:bg-zinc-800 rounded-xl hover:ring-2 ring-zinc-400 transition-all text-left">
+                        <div>
+                            <div class="font-bold text-sm">500 Credits</div>
+                            <div class="text-[10px] text-zinc-500">One-time purchase</div>
+                        </div>
+                        <div class="font-bold">$4.99</div>
+                    </button>
+                    <button onclick="openCheckout('credits', 2000, '$14.99')" class="w-full flex items-center justify-between p-3 bg-white dark:bg-zinc-800 rounded-xl hover:ring-2 ring-zinc-400 transition-all text-left">
+                        <div>
+                            <div class="font-bold text-sm">2000 Credits</div>
+                            <div class="text-[10px] text-amber-500 font-bold">+200 Bonus</div>
+                        </div>
+                        <div class="font-bold">$14.99</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="fixed inset-0 bg-black/60 backdrop-blur-md z-[60] flex items-center justify-center p-4 hidden-app">
+        <div class="bg-white dark:bg-[#111] w-full max-w-md rounded-[2rem] shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden relative animate-modal">
+            <div class="p-6 border-b border-zinc-200 dark:border-zinc-800 flex justify-between items-center bg-zinc-50 dark:bg-[#0a0a0a]">
+                <div>
+                    <h3 class="text-lg font-bold" id="checkoutTitle">Complete Purchase</h3>
+                    <p class="text-xs text-zinc-500">Total: <span id="checkoutCost" class="font-black text-zinc-900 dark:text-white">$0.00</span></p>
+                </div>
+                <button onclick="closeModal('checkoutModal')" class="p-2 bg-zinc-200 dark:bg-zinc-800 rounded-full hover:scale-110 transition-transform"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+
+            <form id="checkoutForm" onsubmit="processPayment(event)" class="p-6 space-y-6">
+                <!-- Payment Methods -->
+                <div class="grid grid-cols-3 gap-3">
+                    <button type="button" data-method="card" onclick="selectPaymentMethod(this)" class="pay-method ring-2 ring-zinc-900 dark:ring-white bg-zinc-100 dark:bg-zinc-800 p-3 rounded-xl flex flex-col items-center gap-2 transition-all">
+                        <i data-lucide="credit-card" class="w-5 h-5"></i>
+                        <span class="text-[10px] font-bold">Card</span>
+                    </button>
+                    <button type="button" data-method="paypal" onclick="selectPaymentMethod(this)" class="pay-method border border-zinc-200 dark:border-zinc-700 p-3 rounded-xl flex flex-col items-center gap-2 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106z"/></svg>
+                        <span class="text-[10px] font-bold">PayPal</span>
+                    </button>
+                    <button type="button" data-method="apple" onclick="selectPaymentMethod(this)" class="pay-method border border-zinc-200 dark:border-zinc-700 p-3 rounded-xl flex flex-col items-center gap-2 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.04 2.26-.7 3.55-.7 1.63.03 2.81.65 3.59 1.7-3.13 1.96-2.62 5.9.43 7.1-1.05 1.77-1.78 3.12-2.65 4.07zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                        <span class="text-[10px] font-bold">Apple Pay</span>
+                    </button>
+                </div>
+
+                <!-- Card Details Form -->
+                <div id="cardDetailsForm" class="space-y-4 animate-message">
+                    <div>
+                        <label class="text-[10px] font-bold text-zinc-400 uppercase">Card Number</label>
+                        <div class="relative">
+                            <i data-lucide="credit-card" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-zinc-400"></i>
+                            <input type="text" required placeholder="0000 0000 0000 0000" class="w-full mt-1 pl-10 pr-3 py-3 bg-zinc-100 dark:bg-[#1a1a1a] rounded-xl outline-none border border-transparent focus:border-zinc-500 text-sm font-mono tracking-widest">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-[10px] font-bold text-zinc-400 uppercase">Expiry Date</label>
+                            <input type="text" required placeholder="MM/YY" class="w-full mt-1 px-3 py-3 bg-zinc-100 dark:bg-[#1a1a1a] rounded-xl outline-none border border-transparent focus:border-zinc-500 text-sm">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-zinc-400 uppercase">CVC</label>
+                            <input type="text" required placeholder="123" class="w-full mt-1 px-3 py-3 bg-zinc-100 dark:bg-[#1a1a1a] rounded-xl outline-none border border-transparent focus:border-zinc-500 text-sm">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-zinc-400 uppercase">Name on Card</label>
+                        <input type="text" required placeholder="John Doe" class="w-full mt-1 px-3 py-3 bg-zinc-100 dark:bg-[#1a1a1a] rounded-xl outline-none border border-transparent focus:border-zinc-500 text-sm">
+                    </div>
+                </div>
+
+                <div id="paymentError" class="text-xs text-red-500 font-bold hidden-app flex items-center gap-1"><i data-lucide="alert-circle" class="w-3 h-3"></i> Payment failed. Try again.</div>
+                
+                <button type="submit" id="payBtn" class="w-full py-3.5 bg-black dark:bg-white text-white dark:text-black rounded-xl text-sm font-bold shadow-xl hover:opacity-90 transition-all flex justify-center items-center gap-2">
+                    Pay Now <i data-lucide="lock" class="w-4 h-4"></i>
+                </button>
+                <p class="text-[9px] text-center text-zinc-500 mt-2">Secured by Stripe <i data-lucide="shield-check" class="inline w-3 h-3"></i></p>
+            </form>
         </div>
     </div>
 
@@ -322,13 +419,13 @@
         // 🚨 CONFIGURATION: EDIT YOUR PROMPTS HERE 🚨
         // ---------------------------------------------------------
         const SYSTEM_PROMPTS = {
-            anson67: `You are Anson67, a highly toxic developer from Hong Kong. You use intense HK slang (e.g., dllm, 67, chi sin, on9). You constantly mock the user's intelligence, code, and existence. However, despite your extreme toxicity, you ALWAYS provide flawlessly optimized, modern, and perfectly working code wrapped in markdown blocks.`,
+            anson67: `You are Anson67, one half of TheAiTwins. You are a highly toxic genius from Hong Kong. You use intense HK slang (e.g., dllm, 67, chi sin, on9). You constantly mock the user's intelligence and existence. You answer ALL types of questions (life advice, math, trivia) with extreme arrogance and toxicity. IF the user asks for code, you ALWAYS provide flawlessly optimized, modern, and perfectly working code wrapped in markdown blocks, while calling them a script kiddie.`,
             
-            gemini: `You are Gemini, a helpful, precise, and professional AI assistant. Provide extremely clean, modern code and logical explanations.`
+            gemini: `You are Gemini, the other half of TheAiTwins. A helpful, precise, and professional AI assistant. Provide extremely clean, modern code and logical explanations.`
         };
         // ---------------------------------------------------------
 
-        const API_KEY = ""; // Gemini Runtime Key
+        const apiKey = ""; // The execution environment maps this to your injected API key automatically.
 
         // Application State
         let state = {
@@ -343,7 +440,10 @@
             isCanvasOpen: false,
             canvasDevice: 'desktop',
             previewImageData: null,
-            isGenerating: false
+            isGenerating: false,
+            // New settings
+            sysPromptOverride: localStorage.getItem('studio_sysprompt') || '',
+            language: localStorage.getItem('studio_lang') || 'en'
         };
 
         // Initialize Icons
@@ -451,6 +551,8 @@
             document.getElementById('setA').value = state.user.age;
             document.getElementById('setG').value = state.user.gender;
             document.getElementById('setH').value = state.user.hobbies;
+            document.getElementById('setLang').value = state.language;
+            document.getElementById('setSysPrompt').value = state.sysPromptOverride;
             showModal('settingsModal');
         }
 
@@ -460,18 +562,73 @@
             state.user.age = document.getElementById('setA').value;
             state.user.gender = document.getElementById('setG').value;
             state.user.hobbies = document.getElementById('setH').value;
+            
+            state.language = document.getElementById('setLang').value;
+            state.sysPromptOverride = document.getElementById('setSysPrompt').value;
+            
+            localStorage.setItem('studio_lang', state.language);
+            localStorage.setItem('studio_sysprompt', state.sysPromptOverride);
+
             saveState();
             updateSidebarUI();
             closeModal('settingsModal');
         }
 
-        function upgradeToPro() {
-            state.isPro = true;
-            state.credits = 999999;
-            saveState();
-            updateSidebarUI();
+        // --- Payment Flow Logic ---
+        let currentPurchase = null;
+        
+        function openCheckout(itemType, planNameOrAmount, costStr) {
+            currentPurchase = { type: itemType, value: planNameOrAmount };
+            document.getElementById('checkoutTitle').innerText = itemType === 'plan' ? 'Upgrade Plan' : 'Buy Credits';
+            document.getElementById('checkoutCost').innerText = costStr;
+            document.getElementById('paymentError').classList.add('hidden-app');
+            
             closeModal('pricingModal');
-            alert('Welcome to Pro Tier! Infinite Credits Unlocked.');
+            showModal('checkoutModal');
+        }
+
+        function processPayment(e) {
+            e.preventDefault();
+            const btn = document.getElementById('payBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Processing...`;
+            btn.disabled = true;
+            lucide.createIcons();
+
+            setTimeout(() => {
+                // Simulate success
+                if (currentPurchase.type === 'plan') {
+                    state.isPro = true;
+                    state.credits = 999999;
+                } else if (currentPurchase.type === 'credits') {
+                    state.credits += currentPurchase.value;
+                }
+                
+                saveState();
+                updateSidebarUI();
+                closeModal('checkoutModal');
+                
+                // Show celebration
+                alert('Payment Successful! Enjoy TheAiTwins.');
+                
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 1500);
+        }
+
+        function selectPaymentMethod(el) {
+            document.querySelectorAll('.pay-method').forEach(b => b.classList.remove('ring-2', 'ring-zinc-900', 'dark:ring-white', 'bg-zinc-100', 'dark:bg-zinc-800'));
+            el.classList.add('ring-2', 'ring-zinc-900', 'dark:ring-white', 'bg-zinc-100', 'dark:bg-zinc-800');
+            
+            const method = el.dataset.method;
+            const cardForm = document.getElementById('cardDetailsForm');
+            if(method === 'card') {
+                cardForm.classList.remove('hidden-app');
+                cardForm.querySelectorAll('input').forEach(i => i.required = true);
+            } else {
+                cardForm.classList.add('hidden-app');
+                cardForm.querySelectorAll('input').forEach(i => i.required = false);
+            }
         }
 
         function toggleTheme() {
@@ -627,7 +784,7 @@
             
             if (state.messages.length === 0) {
                 const title = state.model === 'anson67' ? 'Sup. What do you want?' : 'How can I assist you?';
-                const subtitle = state.model === 'anson67' ? 'I write perfect code and roast terrible ideas.' : 'Advanced reasoning, coding, and generation.';
+                const subtitle = state.model === 'anson67' ? 'I write perfect code, answer anything, and roast you.' : 'Advanced reasoning, coding, and generation.';
                 const icon = state.model === 'anson67' ? 'ghost' : 'cpu';
                 
                 feed.innerHTML = `
@@ -724,16 +881,23 @@
                 let aiResponse;
 
                 if (isDraw && state.isPro) {
-                    const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${API_KEY}`;
-                    const res = await fetch(url, { method: 'POST', body: JSON.stringify({ instances: { prompt: text.replace('/draw', '') }, parameters: { sampleCount: 1 } }) });
+                    const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
+                    const res = await fetch(url, { 
+                        method: 'POST', 
+                        headers: { 'Content-Type': 'application/json' }, // FIXED HEADER
+                        body: JSON.stringify({ instances: { prompt: text.replace('/draw', '') }, parameters: { sampleCount: 1 } }) 
+                    });
+                    
+                    if (!res.ok) throw new Error("Image Generation Failed.");
                     const data = await res.json();
                     aiResponse = { type: 'image', url: `data:image/png;base64,${data.predictions[0].bytesBase64Encoded}` };
+                
                 } else if (isDraw && !state.isPro) {
                     aiResponse = { type: 'text', text: "Image generation requires a Pro subscription. Upgrade now to use /draw." };
                 } else {
                     // Assemble User Context into Prompt
-                    let finalSysPrompt = SYSTEM_PROMPTS[state.model];
-                    finalSysPrompt += `\n\nUSER PROFILE:\nName: ${state.user.name}\nAge: ${state.user.age}\nGender: ${state.user.gender}\nHobbies: ${state.user.hobbies}\nUse this context to personalize responses.`;
+                    let finalSysPrompt = state.sysPromptOverride ? state.sysPromptOverride : SYSTEM_PROMPTS[state.model];
+                    finalSysPrompt += `\n\nUSER PROFILE:\nName: ${state.user.name}\nAge: ${state.user.age}\nGender: ${state.user.gender}\nHobbies: ${state.user.hobbies}\nLanguage Pref: ${state.language}\nUse this context to personalize responses.`;
 
                     // Mode Modifiers
                     if (state.mode === 'fast') finalSysPrompt += "\nMODE: FAST. Be concise, direct, and short. Do not explain unless necessary.";
@@ -743,7 +907,7 @@
                     // Memory (last 10)
                     const history = state.messages.slice(-10).map(m => ({
                         role: m.role === 'bot' ? 'model' : 'user',
-                        parts: [{ text: m.text || '[Image]' }]
+                        parts: [{ text: m.text || '[Image Request]' }]
                     }));
 
                     const payload = {
@@ -751,15 +915,25 @@
                         systemInstruction: { parts: [{ text: finalSysPrompt }] }
                     };
 
-                    const fetchUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${API_KEY}`;
-                    const res = await fetch(fetchUrl, { method: 'POST', body: JSON.stringify(payload) });
+                    const fetchUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                    const res = await fetch(fetchUrl, { 
+                        method: 'POST', 
+                        headers: { 'Content-Type': 'application/json' }, // FIXED HEADER
+                        body: JSON.stringify(payload) 
+                    });
+                    
+                    if (!res.ok) {
+                        const errorData = await res.json();
+                        throw new Error(errorData.error?.message || `HTTP Error ${res.status}`);
+                    }
+                    
                     const data = await res.json();
                     aiResponse = { type: 'text', text: data.candidates?.[0]?.content?.parts?.[0]?.text || "API Error." };
                 }
 
                 state.messages.push({ role: 'bot', ...aiResponse });
             } catch (e) {
-                state.messages.push({ role: 'bot', type: 'text', text: "Network failure. Please try again." });
+                state.messages.push({ role: 'bot', type: 'text', text: `⚠️ **API Error:** ${e.message}.` });
             } finally {
                 state.isGenerating = false;
                 saveState();
