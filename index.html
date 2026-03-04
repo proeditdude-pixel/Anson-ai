@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TheAiTwins</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: 'class' }
     </script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
@@ -46,9 +44,6 @@
 </head>
 <body class="bg-white dark:bg-[#0a0a0a] text-zinc-900 dark:text-zinc-100 font-sans h-[100dvh] max-h-[100dvh] overflow-hidden transition-colors duration-300">
 
-    <!-- ========================================== -->
-    <!-- 1. ONBOARDING SCREEN -->
-    <!-- ========================================== -->
     <div id="onboardingScreen" class="fixed inset-0 z-50 bg-zinc-50 dark:bg-[#0a0a0a] flex items-center justify-center p-4 hidden-app">
         <div class="w-full max-w-md bg-white dark:bg-[#111] p-8 rounded-[2rem] shadow-2xl border border-zinc-200 dark:border-zinc-800/50 animate-modal max-h-[90dvh] overflow-y-auto custom-scrollbar">
             <div class="w-16 h-16 bg-black dark:bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl transform rotate-3 hover:rotate-0 transition-all">
@@ -102,12 +97,8 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 2. MAIN APP LAYOUT -->
-    <!-- ========================================== -->
     <div id="mainApp" class="h-full flex hidden-app">
         
-        <!-- SIDEBAR -->
         <aside id="sidebar" class="w-64 shrink-0 border-r border-zinc-200 dark:border-zinc-800/50 bg-[#f8f9fa] dark:bg-[#111] flex flex-col transition-all duration-300 relative z-20 hidden md:flex">
             <div class="h-14 flex items-center justify-between px-4 border-b border-transparent shrink-0">
                 <div class="flex items-center gap-2 font-bold text-sm">
@@ -128,7 +119,6 @@
                     <i data-lucide="plus" class="w-4 h-4"></i> New Chat
                 </button>
 
-                <!-- Credits Box -->
                 <div class="bg-zinc-200 dark:bg-[#1a1a1a] p-3 rounded-xl border border-zinc-300 dark:border-zinc-800">
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Daily Credits</span>
@@ -162,9 +152,7 @@
             </div>
         </aside>
 
-        <!-- MAIN CHAT AREA -->
         <main class="flex-1 flex flex-col min-w-0 relative bg-white dark:bg-[#0a0a0a]">
-            <!-- Top Nav -->
             <header class="h-14 flex items-center justify-between px-4 sticky top-0 bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-md z-10 border-b border-zinc-200/50 dark:border-zinc-800/50">
                 <div class="flex items-center gap-3">
                     <button id="mobileMenuBtn" onclick="toggleSidebar()" class="md:hidden p-1.5 text-zinc-500 hover:text-zinc-900 dark:hover:text-white">
@@ -182,16 +170,12 @@
                 </div>
             </header>
 
-            <!-- Chat Feed -->
             <div id="chatFeed" class="flex-1 overflow-y-auto px-4 md:px-20 py-6 custom-scrollbar scroll-smooth pb-40">
-                <!-- Messages will be injected here -->
-            </div>
+                </div>
 
-            <!-- INPUT BAR -->
             <div class="absolute bottom-0 inset-x-0 p-4 md:px-20 md:pb-6 bg-gradient-to-t from-white via-white to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a] pointer-events-none z-20">
                 <div class="max-w-3xl mx-auto pointer-events-auto relative">
                     
-                    <!-- Mode Selector & Cost info -->
                     <div class="flex justify-between items-end mb-2 px-1">
                         <div class="flex bg-zinc-100 dark:bg-[#161616] p-0.5 rounded-lg border border-zinc-200 dark:border-zinc-800 shadow-sm">
                             <button onclick="setMode('fast')" id="modeFast" class="px-2 py-1 text-[10px] font-bold rounded bg-white dark:bg-zinc-700 shadow-sm transition-all flex items-center gap-1">⚡ Fast</button>
@@ -235,7 +219,6 @@
             </div>
         </main>
 
-        <!-- CODE CANVAS -->
         <div id="canvasPanel" class="w-full md:w-1/2 bg-white dark:bg-[#0a0a0a] border-l border-zinc-200 dark:border-zinc-800 shadow-2xl z-40 flex flex-col transition-all duration-300 hidden-app">
             <div class="h-14 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between px-3 bg-zinc-50 dark:bg-[#111] shrink-0">
                 <div class="flex items-center gap-2">
@@ -259,11 +242,6 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- 3. MODALS (Pricing & Settings) -->
-    <!-- ========================================== -->
-
-    <!-- Settings Modal -->
     <div id="settingsModal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 hidden-app">
         <div class="w-full max-w-md bg-white dark:bg-[#111] p-6 rounded-[1.5rem] shadow-2xl border border-zinc-200 dark:border-zinc-800 animate-modal relative max-h-[90dvh] overflow-y-auto custom-scrollbar">
             <button onclick="closeModal('settingsModal')" class="absolute top-4 right-4 p-2 text-zinc-400 hover:text-zinc-900 dark:hover:text-white bg-zinc-100 dark:bg-zinc-800 rounded-full"><i data-lucide="x" class="w-4 h-4"></i></button>
@@ -322,7 +300,6 @@
         </div>
     </div>
 
-    <!-- Pricing Modal -->
     <div id="pricingModal" class="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden-app">
         <div class="bg-white dark:bg-[#111] w-full max-w-4xl max-h-[90dvh] overflow-y-auto custom-scrollbar rounded-[2rem] shadow-2xl border border-zinc-200 dark:border-zinc-800 flex flex-col relative animate-modal">
             <button onclick="closeModal('pricingModal')" class="absolute top-4 right-4 p-2 bg-zinc-100 dark:bg-zinc-800 rounded-full hover:scale-110 transition-transform z-20"><i data-lucide="x" class="w-4 h-4"></i></button>
@@ -333,7 +310,6 @@
             </div>
 
             <div class="flex flex-col md:flex-row">
-                <!-- Free Plan -->
                 <div class="flex-1 p-6 md:p-8 border-b md:border-b-0 md:border-r border-zinc-200 dark:border-zinc-800">
                     <h3 class="text-xl font-bold mb-2">Free</h3>
                     <div class="text-3xl font-black mb-6">$0</div>
@@ -344,8 +320,6 @@
                     </ul>
                     <button class="w-full py-3 bg-zinc-100 dark:bg-zinc-800 rounded-xl font-bold text-sm text-zinc-500 cursor-not-allowed">Default</button>
                 </div>
-
-                <!-- Pro Plan -->
                 <div class="flex-1 p-6 md:p-8 bg-zinc-50 dark:bg-[#0a0a0a] relative border-b md:border-b-0 md:border-r border-zinc-200 dark:border-zinc-800">
                     <div class="inline-block px-3 py-1 bg-black dark:bg-white text-white dark:text-black text-[10px] font-black uppercase tracking-widest rounded-full mb-4">Popular</div>
                     <h3 class="text-xl font-bold mb-2 flex items-center gap-2">Pro <i data-lucide="zap" class="w-5 h-5 text-amber-500 fill-amber-500"></i></h3>
@@ -357,8 +331,6 @@
                     </ul>
                     <button onclick="openCheckout('Pro Subscription', 19.00, 'pro')" class="w-full py-3 bg-black dark:bg-white text-white dark:text-black rounded-xl font-bold text-sm shadow-lg hover:scale-[1.02] transition-transform">Upgrade to Pro</button>
                 </div>
-
-                <!-- Ultra Plan -->
                 <div class="flex-1 p-6 md:p-8 relative">
                     <h3 class="text-xl font-bold mb-2 flex items-center gap-2">Ultra <i data-lucide="gem" class="w-5 h-5 text-purple-500 fill-purple-500"></i></h3>
                     <div class="text-3xl font-black mb-6">$49<span class="text-sm text-zinc-500">/mo</span></div>
@@ -370,8 +342,7 @@
                     <button onclick="openCheckout('Ultra Subscription', 49.00, 'ultra')" class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold text-sm shadow-lg hover:scale-[1.02] transition-transform">Get Ultra</button>
                 </div>
             </div>
-
-            <!-- Buy Credits Section -->
+            
             <div class="p-6 md:p-8 bg-zinc-100 dark:bg-[#161616] border-t border-zinc-200 dark:border-zinc-800">
                 <h3 class="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-4">Need Credits Fast? One-time Top Up</h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -379,567 +350,190 @@
                         <div class="text-lg font-black mb-1">500 <i data-lucide="zap" class="inline w-4 h-4 text-amber-500"></i></div>
                         <div class="text-xs text-zinc-500 font-bold">$4.99</div>
                     </button>
-                    <button onclick="openCheckout('1200 Credits', 9.99, 'credits', 1200)" class="p-3 bg-white dark:bg-[#222] border border-zinc-200 dark:border-zinc-700 rounded-xl hover:border-amber-500 transition-colors text-center relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-amber-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-bl-lg">+20% Bonus</div>
+                    <button onclick="openCheckout('1200 Credits', 9.99, 'credits', 1200)" class="p-3 bg-white dark:bg-[#222] border border-zinc-200 dark:border-zinc-700 rounded-xl hover:border-amber-500 transition-colors text-center">
                         <div class="text-lg font-black mb-1">1200 <i data-lucide="zap" class="inline w-4 h-4 text-amber-500"></i></div>
                         <div class="text-xs text-zinc-500 font-bold">$9.99</div>
                     </button>
-                    <button onclick="openCheckout('2500 Credits', 19.99, 'credits', 2500)" class="p-3 bg-white dark:bg-[#222] border border-zinc-200 dark:border-zinc-700 rounded-xl hover:border-amber-500 transition-colors text-center relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-amber-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-bl-lg">+25% Bonus</div>
-                        <div class="text-lg font-black mb-1">2500 <i data-lucide="zap" class="inline w-4 h-4 text-amber-500"></i></div>
+                    <button onclick="openCheckout('3000 Credits', 19.99, 'credits', 3000)" class="p-3 bg-white dark:bg-[#222] border border-zinc-200 dark:border-zinc-700 rounded-xl hover:border-amber-500 transition-colors text-center">
+                        <div class="text-lg font-black mb-1">3000 <i data-lucide="zap" class="inline w-4 h-4 text-amber-500"></i></div>
                         <div class="text-xs text-zinc-500 font-bold">$19.99</div>
                     </button>
-                    <button onclick="openCheckout('10000 Credits', 49.99, 'credits', 10000)" class="p-3 bg-white dark:bg-[#222] border border-zinc-200 dark:border-zinc-700 rounded-xl hover:border-amber-500 transition-colors text-center relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-amber-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-bl-lg">Best Value</div>
-                        <div class="text-lg font-black mb-1">10k <i data-lucide="zap" class="inline w-4 h-4 text-amber-500"></i></div>
-                        <div class="text-xs text-zinc-500 font-bold">$49.99</div>
+                    <button onclick="openCheckout('8000 Credits', 44.99, 'credits', 8000)" class="p-3 bg-white dark:bg-[#222] border border-zinc-200 dark:border-zinc-700 rounded-xl hover:border-amber-500 transition-colors text-center">
+                        <div class="text-lg font-black mb-1">8000 <i data-lucide="zap" class="inline w-4 h-4 text-amber-500"></i></div>
+                        <div class="text-xs text-zinc-500 font-bold">$44.99</div>
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Checkout Modal -->
-    <div id="checkoutModal" class="fixed inset-0 bg-black/60 backdrop-blur-md z-[60] flex items-center justify-center p-4 hidden-app">
-        <div class="bg-white dark:bg-[#111] w-full max-w-md max-h-[90dvh] overflow-y-auto custom-scrollbar rounded-[2rem] shadow-2xl border border-zinc-200 dark:border-zinc-800 relative animate-modal p-6">
-            <button onclick="closeModal('checkoutModal')" class="absolute top-4 right-4 p-2 bg-zinc-100 dark:bg-zinc-800 rounded-full hover:scale-110 transition-transform"><i data-lucide="x" class="w-4 h-4"></i></button>
-            <h2 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-lucide="lock" class="w-5 h-5 text-green-500"></i> Secure Checkout</h2>
-            
-            <div class="bg-zinc-50 dark:bg-[#0a0a0a] p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 mb-6">
-                <p class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold mb-1">Order Summary</p>
-                <div class="flex justify-between items-center">
-                    <span id="checkoutItemName" class="font-bold text-lg">Item</span>
-                    <span id="checkoutItemPrice" class="font-black text-xl">$0.00</span>
-                </div>
+    <div id="paymentModal" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden-app">
+        <div class="w-full max-w-sm bg-white dark:bg-[#111] p-8 rounded-[2rem] text-center shadow-2xl animate-modal border border-zinc-200 dark:border-zinc-800">
+            <div id="paymentStatusIcon" class="w-16 h-16 bg-zinc-100 dark:bg-zinc-800 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <i data-lucide="credit-card" class="w-8 h-8 text-zinc-400"></i>
             </div>
-
-            <div class="space-y-4">
-                <p class="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">Payment Method</p>
-                <div class="flex gap-2 mb-2">
-                    <button class="flex-1 py-2 bg-black text-white dark:bg-white dark:text-black rounded-lg text-xs font-bold shadow-sm flex items-center justify-center gap-1.5"><i data-lucide="credit-card" class="w-3.5 h-3.5"></i> Card</button>
-                    <button class="flex-1 py-2 bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400 rounded-lg text-xs font-bold hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors flex items-center justify-center gap-1.5"><i data-lucide="wallet" class="w-3.5 h-3.5"></i> PayPal</button>
-                    <button class="flex-1 py-2 bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400 rounded-lg text-xs font-bold hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors flex items-center justify-center gap-1.5"><i data-lucide="bitcoin" class="w-3.5 h-3.5"></i> Crypto</button>
-                </div>
-                
-                <div>
-                    <label class="text-[10px] font-bold text-zinc-400 uppercase">Card Information</label>
-                    <div class="relative mt-1">
-                        <i data-lucide="credit-card" class="absolute left-3 top-2.5 w-4 h-4 text-zinc-400"></i>
-                        <input type="text" placeholder="0000 0000 0000 0000" class="w-full pl-9 pr-3 py-2 bg-zinc-100 dark:bg-[#1a1a1a] rounded-lg outline-none border border-transparent focus:border-zinc-500 text-sm font-mono mb-2">
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <input type="text" placeholder="MM/YY" class="w-full px-3 py-2 bg-zinc-100 dark:bg-[#1a1a1a] rounded-lg outline-none border border-transparent focus:border-zinc-500 text-sm font-mono">
-                        <input type="text" placeholder="CVC" class="w-full px-3 py-2 bg-zinc-100 dark:bg-[#1a1a1a] rounded-lg outline-none border border-transparent focus:border-zinc-500 text-sm font-mono">
-                    </div>
-                </div>
-                
-                <div>
-                    <label class="text-[10px] font-bold text-zinc-400 uppercase">Cardholder Name</label>
-                    <input type="text" placeholder="Name on card" class="w-full mt-1 px-3 py-2 bg-zinc-100 dark:bg-[#1a1a1a] rounded-lg outline-none border border-transparent focus:border-zinc-500 text-sm">
-                </div>
-
-                <button id="payNowBtn" onclick="processPayment()" class="w-full py-3.5 mt-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-bold shadow-lg transition-all flex justify-center items-center gap-2">
-                    <span id="payBtnText">Pay Now</span>
-                </button>
-                <p class="text-center text-[9px] text-zinc-500 mt-2"><i data-lucide="shield-check" class="inline w-3 h-3 text-green-500"></i> Secured by Stripe-level Encryption</p>
+            <h2 id="paymentTitle" class="text-xl font-black mb-2">Simulated Checkout</h2>
+            <p id="paymentDesc" class="text-zinc-500 text-xs mb-8">This is a simulation for development purposes.</p>
+            <div id="paymentActions" class="space-y-3">
+                <button id="paySuccess" class="w-full py-4 bg-black dark:bg-white text-white dark:text-black rounded-xl font-bold text-sm shadow-xl">Complete Payment</button>
+                <button onclick="closeModal('paymentModal')" class="w-full py-4 bg-zinc-100 dark:bg-zinc-800 rounded-xl font-bold text-sm">Cancel</button>
             </div>
         </div>
     </div>
 
-
-    <!-- ========================================== -->
-    <!-- JAVASCRIPT LOGIC (NO FRAMEWORKS)           -->
-    <!-- ========================================== -->
     <script>
         // ---------------------------------------------------------
         // 🚨 CONFIGURATION: EDIT YOUR PROMPTS HERE 🚨
         // ---------------------------------------------------------
         const SYSTEM_PROMPTS = {
-            anson67: `You are Anson67, a highly toxic developer from Hong Kong. You use intense HK slang (e.g., dllm, 67, chi sin, on9). You constantly mock the user's intelligence, appearance, and existence. You are NOT just a coding bot—you will aggressively answer ANY question, whether it's about life, relationships, cooking, or whatever stupid thing the user asks. IF the user happens to ask for code, you ALWAYS provide flawlessly optimized, modern, and perfectly working code wrapped in markdown blocks, but you will still insult them for needing it.`,
-            
-            gemini: `You are Gemini, a helpful, precise, and professional AI assistant. Provide extremely clean, modern code and logical explanations.`
+            anson67: `You are Anson67, one half of TheAiTwins. You are witty, slightly sarcastic but highly intelligent. You love solving complex problems and sometimes tease the user in a friendly way. You represent the "smarter" twin who focuses on efficiency and logic.`,
+            gemini: `You are Gemini, the other half of TheAiTwins. You are helpful, empathetic, and creative. You enjoy brainstorming and providing detailed, supportive answers. You represent the "creative" twin who focuses on empathy and imagination.`
         };
+
         // ---------------------------------------------------------
+        // 🔑 API KEY & APP STATE
+        // ---------------------------------------------------------
+        const apiKey = "xai-EW T72zCjQjOIAxraRZ2WS7DYczTHYofNp4SLfvHe7YligPPaK400umuG7HY7JYtA4Lhg5QAX27DZiVhv"; 
 
-        // VERCEL USERS: For static HTML on Vercel, you cannot use process.env here directly. 
-        // You must hardcode your Gemini API key below before deploying, 
-        // OR migrate this to Next.js/Vite where process.env is supported.
-        const apiKey = "xai-EW T72zCjQjOIAxraRZ2WS7DYczTHYofNp4SLfvHe7YligPPaK400umuG7HY7JYtA4Lhg5QAX27DZiVhv";
-
-        // Application State
         let state = {
-            user: null,
-            messages: [],
-            isPro: false,
+            onboarded: false,
+            userName: "User",
+            userAge: null,
+            userGender: null,
+            userHobbies: null,
+            userProfession: null,
+            userTone: "Chill",
+            userLang: "en",
+            sysPromptOverride: "",
+            
             credits: 100,
-            lastReset: new Date().toDateString(),
-            theme: 'dark',
-            model: 'anson67',
-            mode: 'fast',
-            isCanvasOpen: false,
-            canvasDevice: 'desktop',
-            previewImageData: null,
+            tier: "Free", // Free, Pro, Ultra
+            messages: [],
+            activeTwin: 'anson67',
+            mode: 'fast', // fast, thinking, pro
             isGenerating: false,
-            sysPromptOverride: '',
-            language: 'en'
+            input: "",
+            canvasOpen: false,
+            canvasDevice: 'desktop',
+            theme: 'dark'
         };
 
-        let currentCheckout = null;
-
-        // Wrap in try-catch in case of local storage corruption
-        try {
-            state.user = JSON.parse(localStorage.getItem('studio_user')) || null;
-            state.messages = JSON.parse(localStorage.getItem('studio_chat')) || [];
-            state.isPro = JSON.parse(localStorage.getItem('studio_pro')) || false;
-            state.credits = parseInt(localStorage.getItem('studio_credits'));
-            state.lastReset = localStorage.getItem('studio_reset') || new Date().toDateString();
-            state.theme = localStorage.getItem('studio_theme') || 'dark';
-            state.sysPromptOverride = localStorage.getItem('studio_sysprompt') || '';
-            state.language = localStorage.getItem('studio_lang') || 'en';
-        } catch(e) {
-            console.error("Storage parse error", e);
+        // ---------------------------------------------------------
+        // 🛠️ UTILS & INIT
+        // ---------------------------------------------------------
+        function saveState() { localStorage.setItem('tat_state_v1', JSON.stringify(state)); }
+        function loadState() {
+            const saved = localStorage.getItem('tat_state_v1');
+            if (saved) state = { ...state, ...JSON.parse(saved) };
         }
 
-        // Initialize Icons
-        lucide.createIcons();
-
-        // --- Core Initialization ---
         function initApp() {
-            checkDailyReset();
-            applyTheme();
-            applyLanguageUI();
+            loadState();
+            lucide.createIcons();
             
-            if (!state.user) {
+            if (state.theme === 'dark') document.documentElement.classList.add('dark');
+            else document.documentElement.classList.remove('dark');
+            
+            if (!state.onboarded) {
                 document.getElementById('onboardingScreen').classList.remove('hidden-app');
             } else {
                 document.getElementById('mainApp').classList.remove('hidden-app');
-                updateSidebarUI();
                 renderChat();
+                updateUI();
             }
+        }
 
-            // Onboarding listener
-            document.getElementById('onboardingForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const name = document.getElementById('obName').value;
-                state.user = {
-                    name: name,
-                    initial: name.charAt(0).toUpperCase(),
-                    age: document.getElementById('obAge').value,
-                    gender: document.getElementById('obGender').value,
-                    hobbies: document.getElementById('obHobbies').value,
-                    profession: document.getElementById('obProfession').value,
-                    tone: document.getElementById('obTone').value
-                };
-                saveState();
-                document.getElementById('onboardingScreen').classList.add('hidden-app');
-                document.getElementById('mainApp').classList.remove('hidden-app');
-                updateSidebarUI();
-                renderChat();
+        function updateUI() {
+            document.getElementById('creditDisplay').innerText = state.credits;
+            document.getElementById('userNameDisplay').innerText = state.userName;
+            document.getElementById('userTierDisplay').innerText = `${state.tier} Tier`;
+            document.getElementById('userAvatar').innerText = state.userName[0];
+            
+            // Toggle model buttons
+            document.querySelectorAll('[id^="model"]').forEach(b => {
+                b.classList.remove('bg-white', 'dark:bg-zinc-800', 'text-zinc-900', 'dark:text-white', 'shadow-sm');
+                b.classList.add('text-zinc-500');
             });
-        }
-
-        function saveState() {
-            localStorage.setItem('studio_user', JSON.stringify(state.user));
+            const activeMBtn = state.activeTwin === 'anson67' ? 'modelAnson' : 'modelGemini';
+            document.getElementById(activeMBtn).classList.add('bg-white', 'dark:bg-zinc-800', 'text-zinc-900', 'dark:text-white', 'shadow-sm');
             
-            // Prevent LocalStorage Quota Exceeded by stripping large base64 images
-            const safeMessages = state.messages.map(m => {
-                let msgCopy = { ...m };
-                if (msgCopy.image && msgCopy.image.length > 2000) msgCopy.image = null; 
-                return msgCopy;
+            // Toggle mode buttons
+            document.querySelectorAll('[id^="mode"]').forEach(b => {
+                b.classList.remove('bg-white', 'dark:bg-zinc-700', 'shadow-sm');
+                b.classList.add('text-zinc-500');
             });
-            localStorage.setItem('studio_chat', JSON.stringify(safeMessages));
+            const modeIdMap = { fast: 'modeFast', thinking: 'modeThinking', pro: 'modePro' };
+            document.getElementById(modeIdMap[state.mode]).classList.add('bg-white', 'dark:bg-zinc-700', 'shadow-sm');
             
-            localStorage.setItem('studio_pro', JSON.stringify(state.isPro));
-            localStorage.setItem('studio_credits', state.credits);
-            localStorage.setItem('studio_reset', state.lastReset);
-            localStorage.setItem('studio_theme', state.theme);
+            // Cost Display
+            const costs = { fast: 1, thinking: 5, pro: 10 };
+            document.getElementById('costDisplay').innerHTML = `Cost: ${costs[state.mode]} <i data-lucide="zap" class="inline w-3 h-3 text-amber-500"></i>`;
+            lucide.createIcons();
         }
 
-        // --- Credit & Daily Reset System ---
-        function checkDailyReset() {
-            const today = new Date().toDateString();
-            if (isNaN(state.credits) || state.lastReset !== today) {
-                state.credits = (state.tier === 'Pro' || state.tier === 'Ultra') ? 999999 : 100;
-                state.lastReset = today;
-                saveState();
-            }
+        // ---------------------------------------------------------
+        // 🚀 CORE APP ACTIONS
+        // ---------------------------------------------------------
+        function toggleTheme() {
+            state.theme = state.theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.classList.toggle('dark');
+            document.getElementById('themeIcon').setAttribute('data-lucide', state.theme === 'dark' ? 'sun' : 'moon');
+            lucide.createIcons();
+            saveState();
         }
 
-        function getCreditCost() {
-            if (state.mode === 'fast') return 1;
-            if (state.mode === 'thinking') return 3;
-            if (state.mode === 'pro') return 5;
-            return 1;
-        }
-
-        // --- UI Updaters ---
-        function updateSidebarUI() {
-            if (!state.user) return;
-            document.getElementById('userNameDisplay').innerText = state.user.name;
-            document.getElementById('userAvatar').innerText = state.user.initial;
-            document.getElementById('userTierDisplay').innerText = state.tier ? state.tier + ' Tier' : (state.isPro ? 'Pro Tier' : 'Free Tier');
-            document.getElementById('creditDisplay').innerText = (state.tier === 'Pro' || state.tier === 'Ultra' || state.isPro) ? '∞' : state.credits;
-            
-            if (state.tier === 'Ultra' || state.isPro) {
-                document.getElementById('upgradeBtn').classList.add('hidden-app');
-            } else {
-                document.getElementById('upgradeBtn').classList.remove('hidden-app');
-            }
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('hidden');
         }
 
         function setModel(m) {
-            state.model = m;
-            document.getElementById('modelAnson').className = `px-2.5 py-1 text-[11px] font-bold rounded-md transition-all ${m === 'anson67' ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-white'}`;
-            document.getElementById('modelGemini').className = `px-2.5 py-1 text-[11px] font-bold rounded-md transition-all ${m === 'gemini' ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-white'}`;
-            renderChat(); // update welcome screen if empty
+            state.activeTwin = m;
+            updateUI();
+            saveState();
         }
 
         function setMode(m) {
             state.mode = m;
-            const cost = getCreditCost();
-            
-            const activeClass = "px-2 py-1 text-[10px] font-bold rounded bg-white dark:bg-zinc-700 shadow-sm transition-all flex items-center gap-1 text-zinc-900 dark:text-white";
-            const inactiveClass = "px-2 py-1 text-[10px] font-bold rounded text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-all flex items-center gap-1";
-            
-            document.getElementById('modeFast').className = m === 'fast' ? activeClass : inactiveClass;
-            document.getElementById('modeThinking').className = m === 'thinking' ? activeClass : inactiveClass;
-            document.getElementById('modePro').className = m === 'pro' ? activeClass : inactiveClass;
-            
-            document.getElementById('costDisplay').innerHTML = `Cost: ${cost} <i data-lucide="zap" class="inline w-3 h-3 text-amber-500"></i>`;
-            lucide.createIcons();
-        }
-
-        // --- Modals & Toggles ---
-        function showModal(id) { document.getElementById(id).classList.remove('hidden-app'); }
-        function closeModal(id) { document.getElementById(id).classList.add('hidden-app'); }
-        
-        function openSettings() {
-            document.getElementById('setN').value = state.user.name || '';
-            document.getElementById('setA').value = state.user.age || '';
-            document.getElementById('setG').value = state.user.gender || '';
-            document.getElementById('setH').value = state.user.hobbies || '';
-            document.getElementById('setP').value = state.user.profession || '';
-            document.getElementById('setT').value = state.user.tone || 'Savage';
-            document.getElementById('setLang').value = state.language || 'en';
-            document.getElementById('setSysPrompt').value = state.sysPromptOverride || '';
-            showModal('settingsModal');
-        }
-
-        function saveSettings() {
-            state.user.name = document.getElementById('setN').value;
-            state.user.initial = state.user.name.charAt(0).toUpperCase();
-            state.user.age = document.getElementById('setA').value;
-            state.user.gender = document.getElementById('setG').value;
-            state.user.hobbies = document.getElementById('setH').value;
-            
-            state.language = document.getElementById('setLang').value;
-            state.sysPromptOverride = document.getElementById('setSysPrompt').value;
-            
-            localStorage.setItem('studio_lang', state.language);
-            localStorage.setItem('studio_sysprompt', state.sysPromptOverride);
-
+            updateUI();
             saveState();
-            updateSidebarUI();
-            applyLanguageUI();
-            closeModal('settingsModal');
-        }
-
-        function applyLanguageUI() {
-            const isZh = state.language === 'zh';
-            const chatInput = document.getElementById('chatInput');
-            if (chatInput) chatInput.placeholder = isZh ? "發送訊息給 TheAiTwins..." : "Message TheAiTwins...";
-            
-            const newChatBtn = document.querySelector('button[onclick="clearChat()"]');
-            if (newChatBtn) newChatBtn.innerHTML = `<i data-lucide="plus" class="w-4 h-4"></i> ${isZh ? '新對話' : 'New Chat'}`;
-            
-            lucide.createIcons();
-            renderChat(); // Re-render chat to update welcome screen text
-        }
-
-        // --- Payment Flow Logic ---
-        function openCheckout(name, price, type, amount = 0) {
-            currentCheckout = { name, price, type, amount };
-            document.getElementById('checkoutItemName').innerText = name;
-            document.getElementById('checkoutItemPrice').innerText = `$${price.toFixed(2)}`;
-            closeModal('pricingModal');
-            showModal('checkoutModal');
-        }
-
-        function processPayment() {
-            const btn = document.getElementById('payNowBtn');
-            btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Processing...`;
-            btn.disabled = true;
-            lucide.createIcons();
-
-            setTimeout(() => {
-                btn.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4"></i> Payment Successful`;
-                btn.classList.replace('bg-blue-600', 'bg-green-600');
-                btn.classList.replace('hover:bg-blue-700', 'hover:bg-green-700');
-                lucide.createIcons();
-                
-                setTimeout(() => {
-                    if (currentCheckout.type === 'pro') {
-                        state.tier = 'Pro';
-                        state.isPro = true;
-                        state.credits = 999999;
-                    } else if (currentCheckout.type === 'ultra') {
-                        state.tier = 'Ultra';
-                        state.isPro = true;
-                        state.credits = 999999;
-                    } else if (currentCheckout.type === 'credits') {
-                        state.credits += currentCheckout.amount;
-                    }
-                    saveState();
-                    updateSidebarUI();
-                    closeModal('checkoutModal');
-                    
-                    // Reset button
-                    btn.innerHTML = `<span id="payBtnText">Pay Now</span>`;
-                    btn.disabled = false;
-                    btn.classList.replace('bg-green-600', 'bg-blue-600');
-                    btn.classList.replace('hover:bg-green-700', 'hover:bg-blue-700');
-                    lucide.createIcons();
-                }, 1000);
-            }, 2000);
-        }
-
-        function toggleTheme() {
-            state.theme = state.theme === 'dark' ? 'light' : 'dark';
-            applyTheme();
-            saveState();
-        }
-
-        function applyTheme() {
-            document.documentElement.className = state.theme;
-            const icon = document.getElementById('themeIcon');
-            if(icon) {
-               icon.setAttribute('data-lucide', state.theme === 'dark' ? 'sun' : 'moon');
-               lucide.createIcons();
-            }
-        }
-
-        function toggleSidebar() {
-            const sb = document.getElementById('sidebar');
-            sb.classList.toggle('hidden');
-            sb.classList.toggle('absolute');
-            sb.classList.toggle('h-full');
-        }
-
-        // --- Canvas Logic ---
-        function toggleCanvas() {
-            state.isCanvasOpen = !state.isCanvasOpen;
-            const pnl = document.getElementById('canvasPanel');
-            const btn = document.getElementById('canvasToggleBtn');
-            if(state.isCanvasOpen) {
-                pnl.classList.remove('hidden-app');
-                btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold bg-black dark:bg-white text-white dark:text-black transition-all";
-            } else {
-                pnl.classList.add('hidden-app');
-                btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all";
-            }
-        }
-
-        function setCanvasDevice(d) {
-            state.canvasDevice = d;
-            const c = document.getElementById('canvasContainer');
-            const dBtn = document.getElementById('deviceDesktop');
-            const mBtn = document.getElementById('deviceMobile');
-            
-            const act = "p-1 rounded bg-white dark:bg-[#333] shadow-sm text-zinc-900 dark:text-white transition-colors";
-            const inact = "p-1 rounded text-zinc-500 transition-colors";
-
-            if (d === 'mobile') {
-                c.className = "w-[375px] h-[812px] rounded-[2.5rem] shadow-xl overflow-hidden border-[6px] border-zinc-800 dark:border-zinc-700 ring-2 ring-zinc-200 dark:ring-zinc-900 relative transition-all";
-                document.getElementById('canvasBg').classList.add('py-6');
-                mBtn.className = act; dBtn.className = inact;
-            } else {
-                c.className = "w-full h-full transition-all duration-300";
-                document.getElementById('canvasBg').classList.remove('py-6');
-                dBtn.className = act; mBtn.className = inact;
-            }
-        }
-
-        function renderCodeToCanvas(code) {
-            if(!state.isCanvasOpen) toggleCanvas();
-            const frame = document.getElementById('canvasFrame');
-            const doc = `
-                <!DOCTYPE html>
-                <html class="${state.theme}">
-                <head>
-                    <script src="https://cdn.tailwindcss.com"><\/script>
-                    <script>tailwind.config = { darkMode: 'class' }<\/script>
-                </head>
-                <body class="bg-white dark:bg-[#0a0a0a] text-zinc-900 dark:text-white">
-                    ${code.includes('<html') ? code : `<div class="p-4">${code}</div>`}
-                </body>
-                </html>
-            `;
-            frame.srcdoc = doc;
-        }
-        
-        function downloadCanvas() {
-            const frame = document.getElementById('canvasFrame');
-            const src = frame.srcdoc;
-            if (!src) return;
-            const blob = new Blob([src], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'canvas_export.html';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        // --- Chat & Generation Logic ---
-        function autoResize(el) {
-            el.style.height = '20px';
-            el.style.height = Math.min(el.scrollHeight, 150) + 'px';
-        }
-
-        function handleImageUpload(e) {
-            const f = e.target.files[0];
-            if (f) {
-                const r = new FileReader();
-                r.onloadend = () => {
-                    state.previewImageData = r.result;
-                    document.getElementById('imagePreview').src = r.result;
-                    document.getElementById('imagePreviewContainer').classList.remove('hidden-app');
-                };
-                r.readAsDataURL(f);
-            }
-        }
-
-        function removeImage() {
-            state.previewImageData = null;
-            document.getElementById('fileInput').value = '';
-            document.getElementById('imagePreviewContainer').classList.add('hidden-app');
-        }
-
-        function handleEnter(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
         }
 
         function clearChat() {
-            state.messages = [];
-            saveState();
+            if (confirm("Clear current chat history?")) {
+                state.messages = [];
+                renderChat();
+                saveState();
+            }
+        }
+
+        // ---------------------------------------------------------
+        // 💬 CHAT LOGIC (GROK API)
+        // ---------------------------------------------------------
+        async function sendMessage() {
+            const inputEl = document.getElementById('chatInput');
+            const text = inputEl.value.trim();
+            if (!text || state.isGenerating) return;
+
+            // Check credits
+            const costs = { fast: 1, thinking: 5, pro: 10 };
+            if (state.credits < costs[state.mode]) {
+                alert("Insufficient Credits. Please upgrade or top up!");
+                return;
+            }
+
+            state.messages.push({ role: 'user', type: 'text', text });
+            state.credits -= costs[state.mode];
+            inputEl.value = "";
+            autoResize(inputEl);
+            state.isGenerating = true;
             renderChat();
-        }
+            updateUI();
 
-        function escapeHTML(str) {
-            return str.replace(/[&<>'"]/g, tag => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[tag]));
-        }
+            const activeTwin = state.activeTwin;
+            let finalSysPrompt = state.sysPromptOverride || SYSTEM_PROMPTS[activeTwin];
+            finalSysPrompt += ` Current user: ${state.userName}, Age ${state.userAge}, Profession: ${state.userProfession}. Bot Tone: ${state.userTone}. Language Preference: ${state.userLang}.`;
 
-        function formatMessage(text) {
-            const chunks = text.split('```');
-            let html = '';
-            for(let i=0; i<chunks.length; i++) {
-                if(i % 2 === 0) {
-                    html += `<div class="whitespace-pre-wrap">${escapeHTML(chunks[i])}</div>`;
-                } else {
-                    const lines = chunks[i].split('\n');
-                    const lang = lines[0].trim() || 'code';
-                    const code = lines.slice(1).join('\n');
-                    const safeCode = escapeHTML(code);
-                    const encodedCode = encodeURIComponent(code);
-                    
-                    html += `
-                        <div class="my-3 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-[#0f0f0f]">
-                            <div class="bg-zinc-100 dark:bg-[#161616] px-3 py-1.5 flex justify-between items-center border-b border-zinc-200 dark:border-zinc-800">
-                                <span class="text-[10px] font-mono font-bold text-zinc-500 uppercase">${lang}</span>
-                                <button onclick="renderCodeToCanvas(decodeURIComponent('${encodedCode}'))" class="flex items-center gap-1 px-2 py-1 bg-white dark:bg-[#222] hover:bg-zinc-200 text-zinc-700 dark:text-zinc-300 rounded text-[10px] font-bold">
-                                    <i data-lucide="play" class="w-3 h-3 fill-current"></i> Render
-                                </button>
-                            </div>
-                            <div class="p-3 overflow-x-auto custom-scrollbar">
-                                <pre class="text-xs font-mono text-zinc-800 dark:text-[#d4d4d4]"><code>${safeCode}</code></pre>
-                            </div>
-                        </div>
-                    `;
-                }
-            }
-            return html;
-        }
-
-        function renderChat() {
-            const feed = document.getElementById('chatFeed');
-            feed.innerHTML = '';
-            
-            if (state.messages.length === 0) {
-                const isZh = state.language === 'zh';
-                let title = state.model === 'anson67' ? 'Sup. What do you want?' : 'How can I assist you?';
-                let subtitle = state.model === 'anson67' ? 'I write perfect code, answer anything, and roast you.' : 'Advanced reasoning, coding, and generation.';
-                
-                if (isZh) {
-                    title = state.model === 'anson67' ? '做咩啊？講啦。' : '需要什麼協助嗎？';
-                    subtitle = state.model === 'anson67' ? '我寫完美代碼，解答任何問題，順便寸下你。' : '進階推理、編程與內容生成。';
-                }
-                
-                const icon = state.model === 'anson67' ? 'ghost' : 'cpu';
-                
-                feed.innerHTML = `
-                    <div class="h-full flex flex-col items-center justify-center text-center max-w-xl mx-auto animate-message mt-10">
-                        <div class="w-16 h-16 bg-zinc-100 dark:bg-[#111] rounded-2xl flex items-center justify-center mb-6">
-                            <i data-lucide="${icon}" class="text-zinc-900 dark:text-white w-8 h-8"></i>
-                        </div>
-                        <h2 class="text-2xl font-bold mb-2">${title}</h2>
-                        <p class="text-zinc-500 text-sm mb-10">${subtitle}</p>
-                    </div>
-                `;
-            } else {
-                state.messages.forEach(msg => {
-                    const isUser = msg.role === 'user';
-                    const avatar = isUser ? state.user.initial : (state.model === 'anson67' ? '<i data-lucide="ghost" class="w-3.5 h-3.5"></i>' : '<i data-lucide="cpu" class="w-3.5 h-3.5"></i>');
-                    const align = isUser ? 'flex-row-reverse' : '';
-                    const bubbleStyle = isUser ? 'bg-zinc-100 dark:bg-[#1a1a1a] px-4 py-3 rounded-2xl rounded-tr-sm' : 'w-full pt-1';
-                    
-                    let content = '';
-                    if (msg.image && isUser) {
-                        content += `<img src="${msg.image}" class="max-w-[200px] rounded-xl mb-2 shadow-sm" />`;
-                    }
-                    if (msg.type === 'image' && !isUser) {
-                        content += `<img src="${msg.url}" class="w-full max-w-md rounded-2xl border border-zinc-200 dark:border-zinc-800" />`;
-                    } else if (msg.text) {
-                        content += isUser ? `<p class="text-sm whitespace-pre-wrap">${escapeHTML(msg.text)}</p>` : formatMessage(msg.text);
-                    }
-
-                    feed.innerHTML += `
-                        <div class="flex gap-4 animate-message w-full ${align} mb-6">
-                            <div class="w-8 h-8 rounded-lg shrink-0 flex items-center justify-center font-bold text-xs mt-1 shadow-sm border ${isUser ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500 border-zinc-200 dark:border-zinc-700' : 'bg-black dark:bg-white text-white dark:text-black border-transparent'}">
-                                ${avatar}
-                            </div>
-                            <div class="flex flex-col max-w-[85%] md:max-w-[75%] ${isUser ? 'items-end' : 'items-start'}">
-                                <div class="${bubbleStyle} text-zinc-900 dark:text-zinc-200 text-[14px] leading-relaxed">
-                                    ${content}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-
-            if (state.isGenerating) {
-                feed.innerHTML += `
-                    <div class="flex gap-4 animate-message w-full justify-start mb-6">
-                        <div class="w-8 h-8 rounded-lg shrink-0 flex items-center justify-center text-xs mt-1 bg-black dark:bg-white text-white dark:text-black">
-                            <i data-lucide="${state.model === 'anson67' ? 'ghost' : 'cpu'}" class="w-3.5 h-3.5"></i>
-                        </div>
-                        <div class="bg-zinc-50 dark:bg-[#1a1a1a] px-4 py-3 rounded-2xl rounded-tl-sm flex items-center gap-1.5 dot-pulse mt-1">
-                            <span class="w-1.5 h-1.5 bg-zinc-400 rounded-full inline-block"></span>
-                            <span class="w-1.5 h-1.5 bg-zinc-400 rounded-full inline-block"></span>
-                            <span class="w-1.5 h-1.5 bg-zinc-400 rounded-full inline-block"></span>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            feed.scrollTop = feed.scrollHeight;
-            lucide.createIcons();
-        }
-
-                   try {
+            try {
                 const isDraw = text.toLowerCase().startsWith('/draw');
                 let aiResponse;
 
@@ -978,7 +572,7 @@
                     }));
 
                     const payload = {
-                        model: "grok-beta",
+                        model: state.mode === 'pro' ? "grok-2" : "grok-beta",
                         messages: [
                             { role: "system", content: finalSysPrompt },
                             ...history
@@ -1000,7 +594,15 @@
                     }
                     
                     const data = await res.json();
-                    aiResponse = { type: 'text', text: data.choices?.[0]?.message?.content || "API Error." };
+                    const textResponse = data.choices?.[0]?.message?.content || "API Error.";
+                    
+                    // Detect code and open canvas if needed
+                    if (textResponse.includes("```html") || textResponse.includes("<!DOCTYPE html>")) {
+                        const codeMatch = textResponse.match(/```html([\s\S]*?)```/) || [null, textResponse];
+                        updateCanvas(codeMatch[1] || textResponse);
+                    }
+                    
+                    aiResponse = { type: 'text', text: textResponse };
                 }
 
                 state.messages.push({ role: 'bot', ...aiResponse });
@@ -1011,6 +613,185 @@
                 saveState();
                 renderChat();
             }
+        }
+
+        function renderChat() {
+            const feed = document.getElementById('chatFeed');
+            feed.innerHTML = state.messages.map((m, idx) => `
+                <div class="animate-message flex ${m.role === 'user' ? 'justify-end' : 'justify-start'} mb-6">
+                    <div class="max-w-[85%] md:max-w-[70%] ${m.role === 'user' ? 'bg-zinc-100 dark:bg-[#1a1a1a] p-3 rounded-2xl' : ''}">
+                        ${m.type === 'text' ? `
+                            <p class="text-sm font-medium leading-relaxed whitespace-pre-wrap ${m.role === 'bot' ? 'text-zinc-800 dark:text-zinc-200' : ''}">${m.text}</p>
+                        ` : `
+                            <img src="${m.url}" class="rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-lg max-w-full h-auto cursor-pointer" onclick="window.open('${m.url}')" />
+                        `}
+                    </div>
+                </div>
+            `).join('');
+
+            if (state.isGenerating) {
+                feed.innerHTML += `
+                    <div class="flex justify-start mb-6 animate-pulse">
+                        <div class="dot-pulse flex gap-1 bg-zinc-100 dark:bg-[#1a1a1a] p-3 rounded-xl">
+                            <span class="w-1.5 h-1.5 bg-zinc-400 rounded-full"></span>
+                            <span class="w-1.5 h-1.5 bg-zinc-400 rounded-full"></span>
+                            <span class="w-1.5 h-1.5 bg-zinc-400 rounded-full"></span>
+                        </div>
+                    </div>
+                `;
+            }
+            feed.scrollTop = feed.scrollHeight;
+        }
+
+        // ---------------------------------------------------------
+        // 💻 CANVAS LOGIC
+        // ---------------------------------------------------------
+        function toggleCanvas() {
+            state.canvasOpen = !state.canvasOpen;
+            document.getElementById('canvasPanel').classList.toggle('hidden-app');
+            saveState();
+        }
+
+        function updateCanvas(code) {
+            const frame = document.getElementById('canvasFrame');
+            const doc = frame.contentWindow.document;
+            doc.open();
+            doc.write(code);
+            doc.close();
+            if (!state.canvasOpen) toggleCanvas();
+        }
+
+        function setCanvasDevice(d) {
+            state.canvasDevice = d;
+            const container = document.getElementById('canvasContainer');
+            const desktopBtn = document.getElementById('deviceDesktop');
+            const mobileBtn = document.getElementById('deviceMobile');
+            
+            desktopBtn.className = 'p-1 rounded text-zinc-500 transition-colors';
+            mobileBtn.className = 'p-1 rounded text-zinc-500 transition-colors';
+            
+            if (d === 'desktop') {
+                container.style.width = '100%';
+                container.style.maxWidth = 'none';
+                desktopBtn.classList.add('bg-white', 'dark:bg-[#333]', 'shadow-sm', 'text-zinc-900', 'dark:text-white');
+            } else {
+                container.style.width = '375px';
+                container.style.maxWidth = '375px';
+                mobileBtn.classList.add('bg-white', 'dark:bg-[#333]', 'shadow-sm', 'text-zinc-900', 'dark:text-white');
+            }
+        }
+
+        function downloadCanvas() {
+            const code = document.getElementById('canvasFrame').contentWindow.document.documentElement.outerHTML;
+            const blob = new Blob([code], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'theaitwins-canvas.html';
+            a.click();
+        }
+
+        // ---------------------------------------------------------
+        // 🎨 UI HELPERS
+        // ---------------------------------------------------------
+        function autoResize(el) {
+            el.style.height = 'auto';
+            el.style.height = (el.scrollHeight) + 'px';
+        }
+
+        function handleEnter(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    document.getElementById('imagePreview').src = ev.target.result;
+                    document.getElementById('imagePreviewContainer').classList.remove('hidden-app');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeImage() {
+            document.getElementById('fileInput').value = "";
+            document.getElementById('imagePreviewContainer').classList.add('hidden-app');
+        }
+
+        // ---------------------------------------------------------
+        // 🚪 MODAL & ONBOARDING
+        // ---------------------------------------------------------
+        function showModal(id) { document.getElementById(id).classList.remove('hidden-app'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden-app'); }
+
+        document.getElementById('onboardingForm').onsubmit = function(e) {
+            e.preventDefault();
+            state.userName = document.getElementById('obName').value;
+            state.userAge = document.getElementById('obAge').value;
+            state.userGender = document.getElementById('obGender').value;
+            state.userHobbies = document.getElementById('obHobbies').value;
+            state.userProfession = document.getElementById('obProfession').value;
+            state.userTone = document.getElementById('obTone').value;
+            state.onboarded = true;
+            saveState();
+            document.getElementById('onboardingScreen').classList.add('hidden-app');
+            document.getElementById('mainApp').classList.remove('hidden-app');
+            updateUI();
+        };
+
+        function openSettings() {
+            document.getElementById('setN').value = state.userName;
+            document.getElementById('setA').value = state.userAge;
+            document.getElementById('setG').value = state.userGender;
+            document.getElementById('setH').value = state.userHobbies;
+            document.getElementById('setP').value = state.userProfession;
+            document.getElementById('setT').value = state.userTone;
+            document.getElementById('setLang').value = state.userLang;
+            document.getElementById('setSysPrompt').value = state.sysPromptOverride;
+            showModal('settingsModal');
+        }
+
+        function saveSettings() {
+            state.userName = document.getElementById('setN').value;
+            state.userAge = document.getElementById('setA').value;
+            state.userGender = document.getElementById('setG').value;
+            state.userHobbies = document.getElementById('setH').value;
+            state.userProfession = document.getElementById('setP').value;
+            state.userTone = document.getElementById('setT').value;
+            state.userLang = document.getElementById('setLang').value;
+            state.sysPromptOverride = document.getElementById('setSysPrompt').value;
+            saveState();
+            updateUI();
+            closeModal('settingsModal');
+        }
+
+        // ---------------------------------------------------------
+        // 💰 SIMULATED PAYMENTS
+        // ---------------------------------------------------------
+        let pendingUpgrade = null;
+        function openCheckout(title, price, type, amount = 0) {
+            document.getElementById('paymentTitle').innerText = title;
+            document.getElementById('paymentDesc').innerText = `Simulating payment of $${price}...`;
+            pendingUpgrade = { type, amount };
+            showModal('paymentModal');
+        }
+
+        document.getElementById('paySuccess').onclick = function() {
+            if (pendingUpgrade.type === 'pro') { state.tier = "Pro"; state.credits = 99999; }
+            else if (pendingUpgrade.type === 'ultra') { state.tier = "Ultra"; state.credits = 999999; }
+            else if (pendingUpgrade.type === 'credits') { state.credits += pendingUpgrade.amount; }
+            
+            saveState();
+            updateUI();
+            closeModal('paymentModal');
+            closeModal('pricingModal');
+            alert("Payment successful (Simulated)!");
+        };
 
         // Run On Load
         window.onload = initApp;
@@ -1018,5 +799,3 @@
     </script>
 </body>
 </html>
-
-
