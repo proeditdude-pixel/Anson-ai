@@ -1,400 +1,971 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TheAiTwins</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = { darkMode: 'class' }
-    </script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <style>
-        /* Premium Custom Animations */
-        @keyframes slideUpFade {
-            0% { opacity: 0; transform: translateY(15px) scale(0.98); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        @keyframes modalEnter {
-            0% { opacity: 0; transform: scale(0.95) translateY(10px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        @keyframes pulseSubtle {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(0.95); }
-        }
-        .animate-message { animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .animate-modal { animation: modalEnter 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        
-        .dot-pulse span { animation: pulseSubtle 1.4s infinite ease-in-out both; }
-        .dot-pulse span:nth-child(1) { animation-delay: -0.32s; }
-        .dot-pulse span:nth-child(2) { animation-delay: -0.16s; }
-        
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
-        .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
-        .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #475569; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TheAiTwins</title>
+<style>
+/* ── RESET & BASE ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+input,textarea,select{font-family:inherit}
+textarea{resize:none}
+svg{display:inline-block;vertical-align:middle;flex-shrink:0}
 
-        /* Hide elements dynamically */
-        .hidden-app { display: none !important; }
-    </style>
+/* ── CSS VARIABLES ── */
+:root{
+–bg:#ffffff;–bg2:#f8f9fa;–bg3:#f1f5f9;–bg4:#e2e8f0;
+–border:#e2e8f0;–border2:#cbd5e1;
+–text:#09090b;–text2:#52525b;–text3:#a1a1aa;
+–card:#ffffff;–card2:#f4f4f5;
+–input:#f4f4f5;–input-focus:#d4d4d8;
+–accent:#000000;–accent-fg:#ffffff;
+–pill-active-bg:#ffffff;–pill-active-txt:#09090b;
+–pill-inactive:#71717a;
+–modal-overlay:rgba(0,0,0,0.4);
+–shadow:0 20px 60px rgba(0,0,0,.12);
+–radius-xl:1rem;–radius-2xl:1.5rem;–radius-3xl:2rem;
+–amber:#f59e0b;–purple:#9333ea;–green:#22c55e;–blue:#3b82f6;–red:#ef4444;
+}
+[data-theme=“dark”]{
+–bg:#0a0a0a;–bg2:#111111;–bg3:#161616;–bg4:#1a1a1a;
+–border:#27272a;–border2:#3f3f46;
+–text:#fafafa;–text2:#a1a1aa;–text3:#52525b;
+–card:#111111;–card2:#1a1a1a;
+–input:#1a1a1a;–input-focus:#3f3f46;
+–accent:#ffffff;–accent-fg:#000000;
+–pill-active-bg:#3f3f46;–pill-active-txt:#fafafa;
+–pill-inactive:#71717a;
+–modal-overlay:rgba(0,0,0,0.7);
+–shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+/* ── LAYOUT ── */
+body{background:var(–bg);color:var(–text)}
+.app{display:flex;height:100vh;position:relative}
+.hidden{display:none!important}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(–border2);border-radius:10px}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.anim-up{animation:fadeUp .35s cubic-bezier(.16,1,.3,1) both}
+.anim-modal{animation:modalIn .28s cubic-bezier(.16,1,.3,1) both}
+.spin{animation:spin .9s linear infinite}
+.dot-pulse span{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(–text3);animation:pulse 1.4s ease-in-out infinite}
+.dot-pulse span:nth-child(2){animation-delay:-.22s}
+.dot-pulse span:nth-child(3){animation-delay:-.11s}
+
+/* ── ONBOARDING ── */
+.onboard-wrap{position:fixed;inset:0;z-index:100;background:var(–bg2);display:flex;align-items:center;justify-content:center;padding:1rem}
+.onboard-card{width:100%;max-width:440px;background:var(–card);border:1px solid var(–border);border-radius:var(–radius-3xl);padding:2rem;box-shadow:var(–shadow);max-height:90vh;overflow-y:auto}
+.ob-logo{width:64px;height:64px;background:var(–accent);color:var(–accent-fg);border-radius:1rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;transform:rotate(3deg);transition:transform .3s}
+.ob-logo:hover{transform:rotate(0deg)}
+.ob-title{font-size:1.4rem;font-weight:800;text-align:center;margin-bottom:.25rem}
+.ob-sub{font-size:.7rem;color:var(–text2);text-align:center;margin-bottom:1.5rem}
+.form-group{margin-bottom:1rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem}
+label.lbl{display:block;font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(–text3);margin-bottom:.3rem;margin-left:2px}
+.inp{width:100%;padding:.75rem 1rem;background:var(–input);border:1.5px solid transparent;border-radius:.75rem;font-size:.875rem;font-weight:600;color:var(–text);outline:none;transition:border-color .2s}
+.inp:focus{border-color:var(–border2)}
+select.inp{appearance:none}
+.btn-primary{width:100%;padding:.85rem;background:var(–accent);color:var(–accent-fg);border-radius:.85rem;font-size:.875rem;font-weight:800;cursor:pointer;transition:opacity .2s;margin-top:.5rem}
+.btn-primary:hover{opacity:.82}
+
+/* ── SIDEBAR ── */
+.sidebar{width:256px;flex-shrink:0;border-right:1px solid var(–border);background:var(–bg2);display:flex;flex-direction:column;height:100vh}
+.sidebar-top{height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 1rem;flex-shrink:0}
+.logo-txt{display:flex;align-items:center;gap:.5rem;font-weight:800;font-size:.875rem}
+.icon-btn{padding:.35rem;color:var(–text3);border-radius:.5rem;transition:color .2s,background .2s;display:flex;align-items:center}
+.icon-btn:hover{color:var(–text);background:var(–input)}
+.sidebar-body{flex:1;overflow-y:auto;padding:.75rem;display:flex;flex-direction:column;gap:1rem}
+.btn-new-chat{display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.65rem;background:var(–accent);color:var(–accent-fg);border-radius:.85rem;font-size:.75rem;font-weight:800;cursor:pointer;transition:transform .15s}
+.btn-new-chat:hover{transform:scale(1.02)}
+.credits-box{background:var(–input);padding:.75rem;border-radius:.85rem;border:1px solid var(–border)}
+.credits-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.25rem}
+.credits-label{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(–text3)}
+.credits-num{font-size:1.4rem;font-weight:900;line-height:1}
+.credits-reset{font-size:.6rem;color:var(–text3);margin-top:.2rem}
+.section-label{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(–text3);padding:0 .5rem;display:block;margin-bottom:.4rem}
+.history-list{display:flex;flex-direction:column;gap:2px}
+.history-item{display:flex;align-items:center;gap:.5rem;padding:.45rem .65rem;border-radius:.5rem;font-size:.72rem;font-weight:600;color:var(–text2);cursor:pointer;transition:background .15s;text-align:left;width:100%;overflow:hidden}
+.history-item:hover{background:var(–input)}
+.history-item span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.history-item svg{flex-shrink:0;opacity:.5}
+.tool-btn{display:flex;align-items:center;gap:.5rem;padding:.5rem .65rem;border-radius:.5rem;font-size:.75rem;font-weight:700;color:var(–text2);cursor:pointer;transition:background .15s;width:100%}
+.tool-btn:hover{background:var(–input)}
+.sidebar-foot{padding:.75rem;border-top:1px solid var(–border);flex-shrink:0;display:flex;flex-direction:column;gap:.5rem}
+.upgrade-btn{display:flex;align-items:center;justify-content:space-between;padding:.65rem .75rem;background:var(–input);border-radius:.85rem;cursor:pointer;transition:background .15s}
+.upgrade-btn:hover{background:var(–border)}
+.upgrade-left{display:flex;align-items:center;gap:.5rem;font-size:.75rem;font-weight:800}
+.user-row{display:flex;align-items:center;gap:.75rem;padding:.5rem .5rem;border-radius:.85rem;cursor:pointer;transition:background .15s}
+.user-row:hover{background:var(–input)}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(–accent);color:var(–accent-fg);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0;text-transform:uppercase}
+.user-name{font-size:.75rem;font-weight:800}
+.user-tier{font-size:.55rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(–text3)}
+
+/* ── MAIN CHAT ── */
+.main{flex:1;display:flex;flex-direction:column;min-width:0;position:relative;background:var(–bg)}
+.topbar{height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 1rem;border-bottom:1px solid var(–border);background:var(–bg);position:sticky;top:0;z-index:10;flex-shrink:0}
+.topbar-left{display:flex;align-items:center;gap:.75rem}
+.model-pills{display:flex;align-items:center;gap:3px;background:var(–bg3);padding:3px;border-radius:.6rem}
+.model-pill{padding:.25rem .6rem;font-size:.68rem;font-weight:800;border-radius:.45rem;color:var(–pill-inactive);transition:all .2s;cursor:pointer}
+.model-pill.active{background:var(–pill-active-bg);color:var(–pill-active-txt);box-shadow:0 1px 4px rgba(0,0,0,.15)}
+.canvas-btn{display:flex;align-items:center;gap:.4rem;padding:.35rem .75rem;border-radius:.5rem;font-size:.7rem;font-weight:800;color:var(–text2);transition:background .15s}
+.canvas-btn:hover{background:var(–input)}
+.canvas-btn.active{background:var(–accent);color:var(–accent-fg)}
+.chat-feed{flex:1;overflow-y:auto;padding:1.5rem 1rem 10rem;display:flex;flex-direction:column;gap:1.5rem}
+@media(min-width:768px){.chat-feed{padding:1.5rem 5rem 10rem}}
+
+/* ── EMPTY STATE ── */
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3rem 1rem;flex:1;margin-top:2rem}
+.empty-icon{width:64px;height:64px;background:var(–input);border-radius:1.2rem;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem}
+.empty-title{font-size:1.4rem;font-weight:800;margin-bottom:.4rem}
+.empty-sub{font-size:.875rem;color:var(–text2);max-width:320px}
+
+/* ── MESSAGES ── */
+.msg-row{display:flex;gap:1rem;width:100%}
+.msg-row.user{flex-direction:row-reverse}
+.msg-avatar{width:32px;height:32px;border-radius:.6rem;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0;margin-top:2px;border:1px solid var(–border)}
+.msg-avatar.bot{background:var(–accent);color:var(–accent-fg);border-color:transparent}
+.msg-avatar.user-av{background:var(–input);color:var(–text2)}
+.msg-content{display:flex;flex-direction:column;max-width:85%;gap:.25rem}
+.msg-row.user .msg-content{align-items:flex-end}
+.bubble{padding:.75rem 1rem;border-radius:1.2rem;font-size:.875rem;line-height:1.65}
+.bubble.user-bubble{background:var(–input);border-radius:1.2rem 1.2rem .3rem 1.2rem}
+.bubble.bot-bubble{width:100%;border-radius:1.2rem 1.2rem 1.2rem .3rem}
+.bubble img{max-width:200px;border-radius:.75rem;margin-bottom:.5rem;display:block}
+.bubble-img img{max-width:100%;border-radius:1rem;border:1px solid var(–border)}
+pre{background:var(–bg3);border:1px solid var(–border);border-radius:.65rem;padding:.85rem;overflow-x:auto;font-size:.75rem;font-family:‘Menlo’,‘Monaco’,‘Courier New’,monospace;margin:.5rem 0;color:var(–text)}
+code{font-family:‘Menlo’,‘Monaco’,‘Courier New’,monospace;font-size:.8em}
+.code-block{border:1px solid var(–border);border-radius:.85rem;overflow:hidden;margin:.5rem 0}
+.code-header{background:var(–bg3);padding:.4rem .85rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(–border)}
+.code-lang{font-size:.6rem;font-weight:800;text-transform:uppercase;color:var(–text3);font-family:monospace}
+.code-render-btn{display:flex;align-items:center;gap:.3rem;padding:.25rem .6rem;background:var(–card);border:1px solid var(–border);border-radius:.4rem;font-size:.65rem;font-weight:800;color:var(–text2);cursor:pointer;transition:background .15s}
+.code-render-btn:hover{background:var(–input)}
+.code-body{padding:.75rem;overflow-x:auto;background:var(–bg2)}
+.code-body pre{background:none;border:none;padding:0;margin:0;font-size:.72rem}
+.typing-bubble{background:var(–input);padding:.75rem 1rem;border-radius:1.2rem 1.2rem 1.2rem .3rem;display:flex;align-items:center;gap:.4rem}
+
+/* ── INPUT BAR ── */
+.input-wrap{position:absolute;bottom:0;left:0;right:0;padding:1rem;background:linear-gradient(to top,var(–bg) 75%,transparent);z-index:20}
+@media(min-width:768px){.input-wrap{padding:1.5rem 5rem}}
+.input-inner{max-width:760px;margin:0 auto}
+.mode-row{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:.5rem}
+.mode-pills{display:flex;background:var(–bg3);border:1px solid var(–border);border-radius:.55rem;padding:2px;gap:2px}
+.mode-pill{padding:.22rem .55rem;font-size:.62rem;font-weight:800;border-radius:.38rem;color:var(–pill-inactive);cursor:pointer;transition:all .2s}
+.mode-pill.active{background:var(–pill-active-bg);color:var(–pill-active-txt);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.cost-badge{font-size:.62rem;font-weight:800;color:var(–text3);background:var(–bg3);border:1px solid var(–border);padding:.22rem .55rem;border-radius:.45rem;display:flex;align-items:center;gap:.25rem}
+.img-preview-wrap{margin-bottom:.5rem;position:relative;display:inline-block}
+.img-preview-wrap img{width:56px;height:56px;object-fit:cover;border-radius:.75rem;border:1px solid var(–border);display:block}
+.img-remove{position:absolute;top:-6px;right:-6px;width:18px;height:18px;background:var(–accent);color:var(–accent-fg);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .15s}
+.img-remove:hover{transform:scale(1.1)}
+.input-box{background:var(–bg3);border:1.5px solid var(–border);border-radius:1.5rem;display:flex;align-items:flex-end;padding:.4rem}
+.input-box:focus-within{border-color:var(–border2)}
+.attach-btn{padding:.45rem;color:var(–text3);border-radius:50%;transition:color .2s,background .2s;display:flex;align-items:center;margin-bottom:1px;margin-left:2px}
+.attach-btn:hover{color:var(–text);background:var(–input)}
+.chat-input{flex:1;background:transparent;border:none;outline:none;padding:.55rem .65rem;font-size:.9375rem;font-weight:500;color:var(–text);min-height:22px;max-height:150px;overflow-y:auto}
+.chat-input::placeholder{color:var(–text3)}
+.send-btn{width:36px;height:36px;background:var(–accent);color:var(–accent-fg);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .15s;margin-bottom:1px;margin-right:2px}
+.send-btn:hover{transform:scale(1.08)}
+.send-btn:disabled{opacity:.25;transform:none}
+
+/* ── CANVAS ── */
+.canvas-panel{width:50%;border-left:1px solid var(–border);background:var(–bg);display:flex;flex-direction:column;flex-shrink:0}
+.canvas-top{height:56px;border-bottom:1px solid var(–border);display:flex;align-items:center;justify-content:space-between;padding:0 .75rem;background:var(–bg2);flex-shrink:0}
+.canvas-title{display:flex;align-items:center;gap:.5rem;font-size:.75rem;font-weight:800}
+.canvas-play-icon{width:28px;height:28px;background:var(–accent);color:var(–accent-fg);border-radius:.45rem;display:flex;align-items:center;justify-content:center}
+.canvas-controls{display:flex;align-items:center;gap:.25rem}
+.device-pills{display:flex;background:var(–input);border-radius:.4rem;padding:2px;gap:2px;margin-right:.5rem}
+.device-pill{padding:.25rem;border-radius:.3rem;color:var(–text3);cursor:pointer;transition:all .2s;display:flex;align-items:center}
+.device-pill.active{background:var(–card);color:var(–text);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.canvas-bg{flex:1;background:var(–bg3);display:flex;justify-content:center;align-items:flex-start;overflow:hidden;padding:1.5rem}
+.canvas-container{width:100%;height:100%;transition:all .3s}
+.canvas-frame{width:100%;height:100%;border:none;background:white}
+.canvas-mobile-wrap{width:375px;height:812px;border-radius:2.5rem;overflow:hidden;border:6px solid #1f2937;box-shadow:var(–shadow)}
+
+/* ── MODALS ── */
+.modal-overlay{position:fixed;inset:0;background:var(–modal-overlay);backdrop-filter:blur(6px);z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem}
+.modal-card{background:var(–card);border:1px solid var(–border);border-radius:var(–radius-3xl);box-shadow:var(–shadow);width:100%;max-width:460px;max-height:90vh;overflow-y:auto;padding:1.5rem;position:relative}
+.modal-close{position:absolute;top:1rem;right:1rem;width:32px;height:32px;background:var(–input);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(–text2);transition:background .15s}
+.modal-close:hover{background:var(–border)}
+.modal-title{font-size:1.1rem;font-weight:800;display:flex;align-items:center;gap:.5rem;margin-bottom:1.25rem}
+.settings-grid{display:flex;flex-direction:column;gap:.85rem}
+.btn-save{width:100%;padding:.7rem;background:var(–accent);color:var(–accent-fg);border-radius:.85rem;font-size:.875rem;font-weight:800;margin-top:.5rem;cursor:pointer;transition:transform .15s}
+.btn-save:hover{transform:scale(1.02)}
+
+/* ── PRICING MODAL ── */
+.pricing-card{max-width:860px}
+.pricing-header{padding:1.5rem 2rem;border-bottom:1px solid var(–border);text-align:center}
+.pricing-header h2{font-size:1.5rem;font-weight:900;margin-bottom:.25rem}
+.pricing-header p{font-size:.875rem;color:var(–text2)}
+.pricing-plans{display:flex;flex-wrap:wrap}
+.plan{flex:1;min-width:200px;padding:1.5rem;border-right:1px solid var(–border)}
+.plan:last-child{border-right:none}
+.plan-badge{display:inline-block;padding:.2rem .65rem;background:var(–accent);color:var(–accent-fg);font-size:.6rem;font-weight:900;text-transform:uppercase;letter-spacing:.06em;border-radius:999px;margin-bottom:.75rem}
+.plan h3{font-size:1.1rem;font-weight:800;margin-bottom:.25rem}
+.plan-price{font-size:2rem;font-weight:900;margin-bottom:1.25rem}
+.plan-price span{font-size:.875rem;color:var(–text2);font-weight:500}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.5rem}
+.plan-features li{display:flex;align-items:center;gap:.6rem;font-size:.875rem}
+.plan-btn{width:100%;padding:.75rem;border-radius:.85rem;font-size:.875rem;font-weight:800;cursor:pointer;transition:transform .15s}
+.plan-btn:hover{transform:scale(1.02)}
+.plan-btn.default{background:var(–input);color:var(–text3);cursor:default}
+.plan-btn.pro{background:var(–accent);color:var(–accent-fg)}
+.plan-btn.ultra{background:#9333ea;color:#fff}
+.credits-section{padding:1.5rem;border-top:1px solid var(–border);background:var(–bg3)}
+.credits-section h3{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(–text2);margin-bottom:.75rem}
+.credit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.65rem}
+@media(max-width:600px){.credit-grid{grid-template-columns:repeat(2,1fr)}.pricing-plans{flex-direction:column}.plan{border-right:none;border-bottom:1px solid var(–border)}}
+.credit-btn{padding:.75rem .5rem;background:var(–card);border:1.5px solid var(–border);border-radius:.85rem;text-align:center;cursor:pointer;transition:border-color .2s;position:relative;overflow:hidden}
+.credit-btn:hover{border-color:var(–amber)}
+.credit-btn-badge{position:absolute;top:0;right:0;background:var(–amber);color:#fff;font-size:.5rem;font-weight:900;padding:.15rem .4rem;border-radius:0 .5rem 0 .5rem}
+.credit-btn-num{font-size:1rem;font-weight:900;margin-bottom:.15rem}
+.credit-btn-price{font-size:.7rem;color:var(–text2);font-weight:700}
+
+/* ── CHECKOUT MODAL ── */
+.checkout-summary{background:var(–bg3);padding:1rem;border-radius:.85rem;border:1px solid var(–border);margin-bottom:1.25rem;display:flex;justify-content:space-between;align-items:center}
+.checkout-summary-label{font-size:.6rem;text-transform:uppercase;letter-spacing:.06em;color:var(–text3);font-weight:800;margin-bottom:.2rem}
+.checkout-summary-name{font-size:1.1rem;font-weight:800}
+.checkout-summary-price{font-size:1.3rem;font-weight:900}
+.pay-method-row{display:flex;gap:.5rem;margin-bottom:1rem}
+.pay-method-btn{flex:1;padding:.55rem;border-radius:.65rem;font-size:.7rem;font-weight:800;display:flex;align-items:center;justify-content:center;gap:.35rem;cursor:pointer;transition:background .15s}
+.pay-method-btn.active{background:var(–accent);color:var(–accent-fg)}
+.pay-method-btn:not(.active){background:var(–input);color:var(–text2)}
+.inp-icon-wrap{position:relative}
+.inp-icon-wrap svg{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);color:var(–text3)}
+.inp-icon-wrap input{padding-left:2.25rem}
+.inp-grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-top:.5rem}
+.btn-pay{width:100%;padding:.85rem;background:var(–blue);color:#fff;border-radius:.85rem;font-size:.875rem;font-weight:800;margin-top:1rem;display:flex;align-items:center;justify-content:center;gap:.5rem;cursor:pointer;transition:background .2s}
+.btn-pay:hover{background:#2563eb}
+.btn-pay.success{background:var(–green)}
+.secure-note{text-align:center;font-size:.6rem;color:var(–text3);margin-top:.5rem;display:flex;align-items:center;justify-content:center;gap:.3rem}
+
+/* ── AMBER / PURPLE color helpers ── */
+.amber{color:var(–amber)} .purple{color:var(–purple)} .green{color:var(–green)}
+.tag-amber{color:var(–amber)} .tag-purple{color:var(–purple)}
+
+/* ── MOBILE ── */
+@media(max-width:767px){
+.sidebar{position:absolute;left:0;top:0;bottom:0;z-index:50;transform:translateX(-100%);transition:transform .25s}
+.sidebar.open{transform:translateX(0)}
+.canvas-panel{position:absolute;right:0;top:0;bottom:0;z-index:45;width:100%}
+}
+</style>
+
 </head>
-<body class="bg-white dark:bg-[#0a0a0a] text-zinc-900 dark:text-zinc-100 font-sans h-[100dvh] max-h-[100dvh] overflow-hidden transition-colors duration-300">
+<body>
 
-    <div id="onboardingScreen" class="fixed inset-0 z-50 bg-zinc-50 dark:bg-[#0a0a0a] flex items-center justify-center p-4 hidden-app">
-        <div class="w-full max-w-md bg-white dark:bg-[#111] p-8 rounded-[2rem] shadow-2xl border border-zinc-200 dark:border-zinc-800/50 animate-modal max-h-[90dvh] overflow-y-auto custom-scrollbar">
-            <div class="w-16 h-16 bg-black dark:bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl transform rotate-3 hover:rotate-0 transition-all">
-                <i data-lucide="users" class="text-white dark:text-black w-8 h-8"></i>
-            </div>
-            <h1 class="text-2xl font-bold text-center mb-2">Welcome to TheAiTwins</h1>
-            <p class="text-zinc-500 text-xs text-center mb-6">Initialize your workspace profile</p>
-            
-            <form id="onboardingForm" class="space-y-4">
-                <div>
-                    <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest ml-1">Nickname</label>
-                    <input type="text" id="obName" required class="w-full mt-1 px-4 py-3 bg-zinc-100 dark:bg-[#1a1a1a] rounded-xl outline-none border border-transparent focus:border-zinc-300 dark:focus:border-zinc-600 transition-all text-sm font-semibold" placeholder="How should I call you?">
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest ml-1">Age</label>
-                        <input type="number" id="obAge" required class="w-full mt-1 px-4 py-3 bg-zinc-100 dark:bg-[#1a1a1a] rounded-xl outline-none border border-transparent focus:border-zinc-300 dark:focus:border-zinc-600 transition-all text-sm font-semibold" placeholder="e.g. 21">
-                    </div>
-                    <div>
-                        <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest ml-1">Gender</label>
-                        <select id="obGender" required class="w-full mt-1 px-4 py-3 bg-zinc-100 dark:bg-[#1a1a1a] rounded-xl outline-none border border-transparent focus:border-zinc-300 dark:focus:border-zinc-600 transition-all text-sm font-semibold appearance-none">
-                            <option value="" disabled selected>Select</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest ml-1">Interests & Hobbies</label>
-                    <input type="text" id="obHobbies" required class="w-full mt-1 px-4 py-3 bg-zinc-100 dark:bg-[#1a1a1a] rounded-xl outline-none border border-transparent focus:border-zinc-300 dark:focus:border-zinc-600 transition-all text-sm font-semibold" placeholder="Coding, Gaming...">
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest ml-1">Profession</label>
-                        <input type="text" id="obProfession" required class="w-full mt-1 px-4 py-3 bg-zinc-100 dark:bg-[#1a1a1a] rounded-xl outline-none border border-transparent focus:border-zinc-300 dark:focus:border-zinc-600 transition-all text-sm font-semibold" placeholder="Student, Dev...">
-                    </div>
-                    <div>
-                        <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest ml-1">Bot Tone</label>
-                        <select id="obTone" required class="w-full mt-1 px-4 py-3 bg-zinc-100 dark:bg-[#1a1a1a] rounded-xl outline-none border border-transparent focus:border-zinc-300 dark:focus:border-zinc-600 transition-all text-sm font-semibold appearance-none">
-                            <option value="Savage">Savage Roast</option>
-                            <option value="Chill">Chill & Casual</option>
-                            <option value="Professional">Professional</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="submit" class="w-full py-3.5 mt-2 bg-black dark:bg-white text-white dark:text-black rounded-xl text-sm font-bold hover:opacity-80 transition-opacity">
-                    Initialize Profile
-                </button>
-            </form>
-        </div>
+<!-- SVG SPRITES -->
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="i-chevup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></symbol>
+  <symbol id="i-img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V22H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16v4"/><path d="M20 12a2 2 0 0 0-2 2 2 2 0 0 0 2 2h2v-4z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></symbol>
+  <symbol id="i-ghost" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 10h.01M15 10h.01M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-gem" viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12l4 6-10 13L2 9z"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+  <symbol id="i-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></symbol>
+</svg>
+
+<!-- ══════════════════════════════════════════════ -->
+
+<!--  ONBOARDING                                   -->
+
+<!-- ══════════════════════════════════════════════ -->
+
+<div id="onboardWrap" class="onboard-wrap hidden">
+  <div class="onboard-card anim-modal">
+    <div class="ob-logo"><svg width="32" height="32"><use href="#i-users"/></svg></div>
+    <h1 class="ob-title">Welcome to TheAiTwins</h1>
+    <p class="ob-sub">Initialize your workspace profile</p>
+    <form id="obForm">
+      <div class="form-group"><label class="lbl">Nickname</label><input class="inp" type="text" id="obName" required placeholder="How should I call you?"></div>
+      <div class="form-row">
+        <div><label class="lbl">Age</label><input class="inp" type="number" id="obAge" required placeholder="e.g. 21"></div>
+        <div><label class="lbl">Gender</label>
+          <select class="inp" id="obGender" required><option value="" disabled selected>Select</option><option>Male</option><option>Female</option><option>Other</option></select></div>
+      </div>
+      <div class="form-group"><label class="lbl">Interests &amp; Hobbies</label><input class="inp" type="text" id="obHobbies" required placeholder="Coding, Gaming..."></div>
+      <div class="form-row">
+        <div><label class="lbl">Profession</label><input class="inp" type="text" id="obProfession" required placeholder="Student, Dev..."></div>
+        <div><label class="lbl">Bot Tone</label>
+          <select class="inp" id="obTone"><option value="Savage">Savage Roast</option><option value="Chill">Chill &amp; Casual</option><option value="Professional">Professional</option></select></div>
+      </div>
+      <button class="btn-primary" type="submit">Initialize Profile</button>
+    </form>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+
+<!--  MAIN APP                                     -->
+
+<!-- ══════════════════════════════════════════════ -->
+
+<div id="mainApp" class="app hidden">
+
+  <!-- SIDEBAR -->
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-top">
+      <div class="logo-txt"><svg width="16" height="16"><use href="#i-users"/></svg> TheAiTwins</div>
+      <div style="display:flex;gap:4px">
+        <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme"><svg id="themeIcon" width="16" height="16"><use href="#i-sun"/></svg></button>
+        <button class="icon-btn" onclick="closeSidebar()" style="display:none" id="sidebarCloseBtn"><svg width="16" height="16"><use href="#i-x"/></svg></button>
+      </div>
     </div>
 
-    <div id="mainApp" class="h-full flex hidden-app">
-       
-        <aside id="sidebar" class="w-64 shrink-0 border-r border-zinc-200 dark:border-zinc-800/50 bg-[#f8f9fa] dark:bg-[#111] flex flex-col transition-all duration-300 relative z-20 hidden md:flex">
-            <div class="h-14 flex items-center justify-between px-4 border-b border-transparent shrink-0">
-                <div class="flex items-center gap-2 font-bold text-sm">
-                    <i data-lucide="users" class="w-4 h-4"></i> TheAiTwins
-                </div>
-                <div class="flex gap-1">
-                    <button onclick="toggleTheme()" class="p-1.5 text-zinc-400 hover:text-zinc-900 dark:hover:text-white rounded-lg">
-                        <i data-lucide="sun" id="themeIcon" class="w-4 h-4"></i>
-                    </button>
-                    <button onclick="toggleSidebar()" class="md:hidden p-1.5 text-zinc-400 hover:text-zinc-900 dark:hover:text-white rounded-lg">
-                        <i data-lucide="x" class="w-4 h-4"></i>
-                    </button>
-                </div>
-            </div>
+```
+<div class="sidebar-body">
+  <button class="btn-new-chat" onclick="clearChat()"><svg width="16" height="16"><use href="#i-plus"/></svg> New Chat</button>
 
-            <div class="flex-1 overflow-y-auto px-3 py-4 space-y-6 custom-scrollbar">
-                <button onclick="clearChat()" class="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-black dark:bg-white text-white dark:text-black rounded-xl text-xs font-bold shadow-md hover:scale-[1.02] transition-transform">
-                    <i data-lucide="plus" class="w-4 h-4"></i> New Chat
-                </button>
+  <div class="credits-box">
+    <div class="credits-header"><span class="credits-label">Daily Credits</span><svg width="12" height="12" class="amber"><use href="#i-zap"/></svg></div>
+    <div class="credits-num" id="creditDisplay">100</div>
+    <div class="credits-reset">Resets daily at 12:00 AM</div>
+  </div>
 
-                <div class="bg-zinc-200 dark:bg-[#1a1a1a] p-3 rounded-xl border border-zinc-300 dark:border-zinc-800">
-                    <div class="flex justify-between items-center mb-1">
-                        <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Daily Credits</span>
-                        <i data-lucide="zap" class="w-3 h-3 text-amber-500"></i>
-                    </div>
-                    <div class="text-xl font-black" id="creditDisplay">100</div>
-                    <div class="text-[9px] text-zinc-400 mt-1 font-medium">Resets daily at 12:00 AM</div>
-                </div>
+  <div>
+    <span class="section-label">Chat History</span>
+    <div class="history-list" id="historyList"><span style="font-size:.65rem;color:var(--text3);padding:0 .5rem;font-style:italic">No history yet</span></div>
+  </div>
 
-                <div class="space-y-1">
-                    <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest px-2 block mb-2">Tools</span>
-                    <button onclick="openSettings()" class="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800/50 rounded-lg transition-colors">
-                        <i data-lucide="settings" class="w-4 h-4"></i> Settings & API Key
-                    </button>
-                </div>
-            </div>
+  <div>
+    <span class="section-label">Tools</span>
+    <button class="tool-btn" onclick="openSettings()"><svg width="15" height="15"><use href="#i-settings"/></svg> Settings</button>
+  </div>
+</div>
 
-            <div class="p-3 border-t border-zinc-200 dark:border-zinc-800/50 shrink-0 space-y-2">
-                <button id="upgradeBtn" onclick="showModal('pricingModal')" class="w-full flex items-center justify-between p-2.5 bg-zinc-200 dark:bg-zinc-800 rounded-xl hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors group">
-                    <div class="flex items-center gap-2 text-xs font-bold"><i data-lucide="zap" class="w-4 h-4 text-amber-500"></i> Upgrade Plan</div>
-                    <i data-lucide="chevron-up" class="w-4 h-4 text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-white"></i>
-                </button>
-                
-                <div class="flex items-center gap-3 p-2 hover:bg-zinc-200 dark:hover:bg-zinc-800/50 rounded-xl cursor-pointer transition-colors" onclick="openSettings()">
-                    <div id="userAvatar" class="w-8 h-8 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-black flex items-center justify-center text-xs font-bold uppercase">U</div>
-                    <div class="flex-1 overflow-hidden">
-                        <p id="userNameDisplay" class="text-xs font-bold truncate">User</p>
-                        <p id="userTierDisplay" class="text-[9px] text-zinc-500 font-bold uppercase tracking-widest">Free Tier</p>
-                    </div>
-                </div>
-            </div>
-        </aside>
+<div class="sidebar-foot">
+  <div class="upgrade-btn" id="upgradeBtn" onclick="openModal('pricingModal')">
+    <div class="upgrade-left"><svg width="16" height="16" class="amber"><use href="#i-zap"/></svg> Upgrade Plan</div>
+    <svg width="14" height="14" style="color:var(--text3)"><use href="#i-chevup"/></svg>
+  </div>
+  <div class="user-row" onclick="openSettings()">
+    <div class="avatar" id="userAvatar">U</div>
+    <div><div class="user-name" id="userName">User</div><div class="user-tier" id="userTier">Free Tier</div></div>
+  </div>
+</div>
+```
 
-        <main class="flex-1 flex flex-col min-w-0 relative bg-white dark:bg-[#0a0a0a]">
-            <header class="h-14 flex items-center justify-between px-4 sticky top-0 bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-md z-10 border-b border-zinc-200/50 dark:border-zinc-800/50">
-                <div class="flex items-center gap-3">
-                    <button id="mobileMenuBtn" onclick="toggleSidebar()" class="md:hidden p-1.5 text-zinc-500 hover:text-zinc-900 dark:hover:text-white">
-                        <i data-lucide="menu" class="w-5 h-5"></i>
-                    </button>
-                    <div class="flex items-center gap-1.5 bg-zinc-100 dark:bg-[#161616] p-1 rounded-lg">
-                        <button onclick="setModel('anson67')" id="modelAnson" class="px-2.5 py-1 text-[11px] font-bold rounded-md bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm transition-all">Anson67</button>
-                        <button onclick="setModel('gemini')" id="modelGemini" class="px-2.5 py-1 text-[11px] font-bold rounded-md text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-all">Gemini</button>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="toggleCanvas()" id="canvasToggleBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all">
-                        <i data-lucide="code" class="w-3.5 h-3.5"></i> Canvas
-                    </button>
-                </div>
-            </header>
+  </aside>
 
-            <div id="chatFeed" class="flex-1 overflow-y-auto px-4 md:px-20 py-6 custom-scrollbar scroll-smooth pb-40">
-                </div>
+  <!-- MAIN CHAT -->
 
-            <div class="absolute bottom-0 inset-x-0 p-4 md:px-20 md:pb-6 bg-gradient-to-t from-white via-white to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a] pointer-events-none z-20">
-                <div class="max-w-3xl mx-auto pointer-events-auto relative">
-                    
-                    <div class="flex justify-between items-end mb-2 px-1">
-                        <div class="flex bg-zinc-100 dark:bg-[#161616] p-0.5 rounded-lg border border-zinc-200 dark:border-zinc-800 shadow-sm">
-                            <button onclick="setMode('fast')" id="modeFast" class="px-2 py-1 text-[10px] font-bold rounded bg-white dark:bg-zinc-700 shadow-sm transition-all flex items-center gap-1">⚡ Fast</button>
-                            <button onclick="setMode('thinking')" id="modeThinking" class="px-2 py-1 text-[10px] font-bold rounded text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-all flex items-center gap-1">🧠 Thinking</button>
-                            <button onclick="setMode('pro')" id="modePro" class="px-2 py-1 text-[10px] font-bold rounded text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-all flex items-center gap-1">💎 Pro</button>
-                        </div>
-                        <span id="costDisplay" class="text-[10px] font-bold text-zinc-400 bg-zinc-100 dark:bg-[#161616] px-2 py-1 rounded-md border border-zinc-200 dark:border-zinc-800">Cost: 1 <i data-lucide="zap" class="inline w-3 h-3 text-amber-500"></i></span>
-                    </div>
-
-                    <div id="imagePreviewContainer" class="mb-2 relative inline-block animate-message hidden-app">
-                        <img id="imagePreview" src="" class="h-14 w-14 object-cover rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-sm" alt="Preview" />
-                        <button onclick="removeImage()" class="absolute -top-1.5 -right-1.5 bg-zinc-900 text-white dark:bg-zinc-100 dark:text-black rounded-full p-1 shadow hover:scale-110 transition-transform">
-                            <i data-lucide="x" class="w-2.5 h-2.5"></i>
-                        </button>
-                    </div>
-
-                    <div class="bg-zinc-100/90 dark:bg-[#161616]/95 backdrop-blur-xl rounded-[1.5rem] border border-zinc-200/50 dark:border-zinc-800/50 shadow-lg focus-within:ring-1 ring-zinc-400 dark:ring-zinc-600 transition-all flex items-end p-1.5">
-                        <button onclick="document.getElementById('fileInput').click()" class="p-2 mb-0.5 ml-1 text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-white dark:hover:bg-[#222] rounded-full transition-colors shrink-0">
-                            <i data-lucide="image" class="w-5 h-5"></i>
-                        </button>
-                        <input type="file" id="fileInput" class="hidden" accept="image/*" onchange="handleImageUpload(event)">
-                        
-                        <textarea 
-                            id="chatInput" 
-                            placeholder="Message TheAiTwins..." 
-                            class="flex-1 bg-transparent border-none outline-none py-2.5 px-3 text-[15px] font-medium resize-none min-h-[20px] max-h-[150px] custom-scrollbar dark:text-white dark:placeholder-zinc-500"
-                            rows="1"
-                            oninput="autoResize(this)"
-                            onkeydown="handleEnter(event)"
-                        ></textarea>
-                        
-                        <button 
-                            id="sendBtn"
-                            onclick="sendMessage()" 
-                            class="p-2 mb-0.5 mr-0.5 bg-black dark:bg-white text-white dark:text-black rounded-full hover:scale-105 disabled:opacity-20 disabled:hover:scale-100 transition-all shrink-0"
-                        >
-                            <i data-lucide="send" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <div id="canvasPanel" class="w-full md:w-1/2 bg-white dark:bg-[#0a0a0a] border-l border-zinc-200 dark:border-zinc-800 shadow-2xl z-40 flex flex-col transition-all duration-300 hidden-app">
-            <div class="h-14 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between px-3 bg-zinc-50 dark:bg-[#111] shrink-0">
-                <div class="flex items-center gap-2">
-                    <div class="p-1.5 bg-black dark:bg-white text-white dark:text-black rounded-md"><i data-lucide="play" class="w-3 h-3 fill-current"></i></div>
-                    <span class="text-xs font-bold block">Preview Canvas</span>
-                </div>
-                <div class="flex items-center gap-1">
-                    <div class="flex bg-zinc-200 dark:bg-zinc-800 rounded-md p-0.5 mr-2">
-                        <button onclick="setCanvasDevice('desktop')" id="deviceDesktop" class="p-1 rounded bg-white dark:bg-[#333] shadow-sm text-zinc-900 dark:text-white transition-colors"><i data-lucide="monitor" class="w-3.5 h-3.5"></i></button>
-                        <button onclick="setCanvasDevice('mobile')" id="deviceMobile" class="p-1 rounded text-zinc-500 transition-colors"><i data-lucide="smartphone" class="w-3.5 h-3.5"></i></button>
-                    </div>
-                    <button onclick="downloadCanvas()" class="p-1.5 text-zinc-500 hover:text-zinc-900 dark:hover:text-white rounded transition-colors"><i data-lucide="download" class="w-4 h-4"></i></button>
-                    <button onclick="toggleCanvas()" class="p-1.5 text-zinc-500 hover:text-red-500 rounded transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
-                </div>
-            </div>
-            <div id="canvasBg" class="flex-1 bg-zinc-100 dark:bg-black relative flex justify-center py-6">
-                <div id="canvasContainer" class="w-full h-full transition-all duration-300">
-                    <iframe id="canvasFrame" class="w-full h-full border-none bg-white dark:bg-[#0a0a0a]" sandbox="allow-scripts allow-same-origin"></iframe>
-                </div>
-            </div>
+  <main class="main">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn" id="menuBtn" onclick="openSidebar()"><svg width="20" height="20"><use href="#i-menu"/></svg></button>
+        <div class="model-pills">
+          <button class="model-pill active" id="pilAnson" onclick="setModel('anson67')">Anson67</button>
+          <button class="model-pill" id="pilGemini" onclick="setModel('gemini')">Gemini</button>
         </div>
+      </div>
+      <button class="canvas-btn" id="canvasBtn" onclick="toggleCanvas()"><svg width="14" height="14"><use href="#i-code"/></svg> Canvas</button>
     </div>
 
-    <div id="settingsModal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 hidden-app">
-        <div class="w-full max-w-md bg-white dark:bg-[#111] p-6 rounded-[1.5rem] shadow-2xl border border-zinc-200 dark:border-zinc-800 animate-modal relative max-h-[90dvh] overflow-y-auto custom-scrollbar">
-            <button onclick="closeModal('settingsModal')" class="absolute top-4 right-4 p-2 text-zinc-400 hover:text-zinc-900 dark:hover:text-white bg-zinc-100 dark:bg-zinc-800 rounded-full"><i data-lucide="x" class="w-4 h-4"></i></button>
-            <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i data-lucide="settings" class="w-5 h-5"></i> Settings</h2>
-            
-            <div class="space-y-4">
-                <div>
-                    <label class="text-[10px] font-bold text-zinc-400 uppercase">Nickname</label>
-                    <input type="text" id="setN" class="w-full mt-1 px-3 py-2 bg-zinc-100 dark:bg-[#1a1a1a] rounded-lg outline-none border border-transparent focus:border-zinc-500 text-sm">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="text-[10px] font-bold text-zinc-400 uppercase">Age</label>
-                        <input type="number" id="setA" class="w-full mt-1 px-3 py-2 bg-zinc-100 dark:bg-[#1a1a1a] rounded-lg outline-none border border-transparent focus:border-zinc-500 text-sm">
-                    </div>
-                    <div>
-                        <label class="text-[10px] font-bold text-zinc-400 uppercase">Gender</label>
-                        <select id="setG" class="w-full mt-1 px-3 py-2 bg-zinc-100 dark:bg-[#1a1a1a] rounded-lg outline-none border border-transparent focus:border-zinc-500 text-sm">
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <label class="text-[10px] font-bold text-zinc-400 uppercase">Hobbies</label>
-                    <input type="text" id="setH" class="w-full mt-1 px-3 py-2 bg-zinc-100 dark:bg-[#1a1a1a] rounded-lg outline-none border border-transparent focus:border-zinc-500 text-sm">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="text-[10px] font-bold text-zinc-400 uppercase">Profession</label>
-                        <input type="text" id="setP" class="w-full mt-1 px-3 py-2 bg-zinc-100 dark:bg-[#1a1a1a] rounded-lg outline-none border border-transparent focus:border-zinc-500 text-sm">
-                    </div>
-                    <div>
-                        <label class="text-[10px] font-bold text-zinc-400 uppercase">Bot Tone</label>
-                        <select id="setT" class="w-full mt-1 px-3 py-2 bg-zinc-100 dark:bg-[#1a1a1a] rounded-lg outline-none border border-transparent focus:border-zinc-500 text-sm">
-                            <option value="Savage">Savage Roast</option>
-                            <option value="Chill">Chill & Casual</option>
-                            <option value="Professional">Professional</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                   <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest ml-1">Language Pref</label>
-                    <select id="setLang" class="w-full mt-1 px-3 py-2 bg-zinc-100 dark:bg-[#1a1a1a] rounded-lg outline-none border border-transparent focus:border-zinc-500 text-sm appearance-none">
-                        <option value="en">English</option>
-                        <option value="zh">繁體中文</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="text-[10px] font-bold text-zinc-400 uppercase tracking-widest ml-1">System Prompt Override</label>
-                    <textarea id="setSysPrompt" class="w-full mt-1 px-3 py-2 bg-zinc-100 dark:bg-[#1a1a1a] rounded-lg outline-none border border-transparent focus:border-zinc-500 text-sm min-h-[80px]" placeholder="Leave blank to use default..."></textarea>
-                </div>
-                <button onclick="saveSettings()" class="w-full py-2.5 mt-4 bg-black dark:bg-white text-white dark:text-black rounded-lg text-sm font-bold shadow-md hover:scale-[1.02] transition-transform">Save Changes</button>
-            </div>
-        </div>
+```
+<!-- CHAT FEED -->
+<div class="chat-feed" id="chatFeed"></div>
+
+<!-- INPUT BAR -->
+<div class="input-wrap">
+  <div class="input-inner">
+    <div class="mode-row">
+      <div class="mode-pills">
+        <button class="mode-pill active" id="mFast" onclick="setMode('fast')">⚡ Fast</button>
+        <button class="mode-pill" id="mThink" onclick="setMode('thinking')">🧠 Thinking</button>
+        <button class="mode-pill" id="mPro" onclick="setMode('pro')">💎 Pro</button>
+      </div>
+      <div class="cost-badge" id="costBadge">Cost: 1 <svg width="11" height="11" class="amber"><use href="#i-zap"/></svg></div>
     </div>
-
-    <div id="pricingModal" class="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden-app">
-        <div class="bg-white dark:bg-[#111] w-full max-w-4xl max-h-[90dvh] overflow-y-auto custom-scrollbar rounded-[2rem] shadow-2xl border border-zinc-200 dark:border-zinc-800 flex flex-col relative animate-modal">
-            <button onclick="closeModal('pricingModal')" class="absolute top-4 right-4 p-2 bg-zinc-100 dark:bg-zinc-800 rounded-full hover:scale-110 transition-transform z-20"><i data-lucide="x" class="w-4 h-4"></i></button>
-            
-            <div class="p-6 md:p-8 border-b border-zinc-200 dark:border-zinc-800 text-center">
-                <h2 class="text-2xl font-black mb-2">Upgrade Your Experience</h2>
-                <p class="text-zinc-500 text-sm">Choose a plan or buy credits to unlock more power.</p>
-            </div>
-
-            <div class="flex flex-col md:flex-row">
-                <div class="flex-1 p-6 md:p-8 border-b md:border-b-0 md:border-r border-zinc-200 dark:border-zinc-800">
-                    <h3 class="text-xl font-bold mb-2">Free</h3>
-                    <div class="text-3xl font-black mb-6">$0</div>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center gap-3 text-sm"><i data-lucide="check" class="w-4 h-4 text-zinc-900 dark:text-white"></i> 100 Credits Daily</li>
-                        <li class="flex items-center gap-3 text-sm"><i data-lucide="check" class="w-4 h-4 text-zinc-900 dark:text-white"></i> Fast Mode</li>
-                        <li class="flex items-center gap-3 text-sm text-zinc-400"><i data-lucide="x" class="w-4 h-4"></i> No Image Generation</li>
-                    </ul>
-                    <button class="w-full py-3 bg-zinc-100 dark:bg-zinc-800 rounded-xl font-bold text-sm text-zinc-500 cursor-not-allowed">Default</button>
-                </div>
-            </div>
-        </div>
+    <div id="imgPreviewWrap" class="img-preview-wrap hidden">
+      <img id="imgPreview" src="" alt="preview"/>
+      <div class="img-remove" onclick="removeImg()"><svg width="10" height="10"><use href="#i-x"/></svg></div>
     </div>
+    <div class="input-box">
+      <button class="attach-btn" onclick="document.getElementById('fileInput').click()"><svg width="20" height="20"><use href="#i-img"/></svg></button>
+      <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleImg(event)">
+      <textarea class="chat-input" id="chatInput" placeholder="Message TheAiTwins..." rows="1" oninput="autoResize(this)" onkeydown="onKey(event)"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()"><svg width="15" height="15"><use href="#i-send"/></svg></button>
+    </div>
+  </div>
+</div>
+```
 
-    <script>
-        // Global State & Core Logic
-        let state = {
-            apiKey: '', // Enter your key here
-            user: null,
-            messages: [],
-            credits: 100,
-            tier: 'free',
-            model: 'anson67',
-            mode: 'fast',
-            isGenerating: false,
-            currentImage: null
-        };
+  </main>
 
-        async function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const text = input.value.trim();
-            if(!text && !state.currentImage) return;
+  <!-- CANVAS PANEL -->
 
-            // Push User Message
-            state.messages.push({ role: 'user', type: 'text', text: text });
-            renderChat();
-            input.value = '';
+  <div id="canvasPanel" class="canvas-panel hidden">
+    <div class="canvas-top">
+      <div class="canvas-title">
+        <div class="canvas-play-icon"><svg width="12" height="12"><use href="#i-play"/></svg></div>
+        Preview Canvas
+      </div>
+      <div class="canvas-controls">
+        <div class="device-pills">
+          <button class="device-pill active" id="devDesk" onclick="setDevice('desktop')" title="Desktop"><svg width="14" height="14"><use href="#i-monitor"/></svg></button>
+          <button class="device-pill" id="devMob" onclick="setDevice('mobile')" title="Mobile"><svg width="14" height="14"><use href="#i-phone"/></svg></button>
+        </div>
+        <button class="icon-btn" onclick="downloadCanvas()" title="Download"><svg width="16" height="16"><use href="#i-dl"/></svg></button>
+        <button class="icon-btn" onclick="toggleCanvas()" title="Close" style="color:var(--red)"><svg width="16" height="16"><use href="#i-x"/></svg></button>
+      </div>
+    </div>
+    <div class="canvas-bg" id="canvasBg">
+      <div id="canvasContainer" class="canvas-container">
+        <iframe id="canvasFrame" class="canvas-frame" sandbox="allow-scripts allow-same-origin"></iframe>
+      </div>
+    </div>
+  </div>
 
-            try {
-                state.isGenerating = true;
-                const apiKey = state.apiKey;
-                
-                // REVISED API CALL
-                const fetchUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`;
-                
-                const response = await fetch(fetchUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: text }] }]
-                    })
-                });
+</div><!-- /mainApp -->
 
-                if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
-                const data = await response.json();
-                const aiText = data.candidates[0].content.parts[0].text;
+<!-- ══════════════════════════════════════════════ -->
 
-                state.messages.push({ role: 'bot', type: 'text', text: aiText });
-            } catch (e) {
-                state.messages.push({ role: 'bot', type: 'text', text: `⚠️ **API Error:** ${e.message}` });
-            } finally {
-                state.isGenerating = false;
-                renderChat();
-            }
-        }
+<!--  SETTINGS MODAL                              -->
 
-        // Initialize UI Elements
-        function initApp() {
-            lucide.createIcons();
-            document.getElementById('onboardingScreen').classList.remove('hidden-app');
-        }
+<!-- ══════════════════════════════════════════════ -->
 
-        function renderChat() {
-            const feed = document.getElementById('chatFeed');
-            feed.innerHTML = state.messages.map(m => `
-                <div class="mb-4 ${m.role === 'user' ? 'text-right' : 'text-left'}">
-                    <div class="inline-block p-4 rounded-2xl ${m.role === 'user' ? 'bg-black text-white' : 'bg-zinc-100 dark:bg-zinc-800'}">
-                        ${m.text}
-                    </div>
-                </div>
-            `).join('');
-            feed.scrollTop = feed.scrollHeight;
-        }
+<div id="settingsModal" class="modal-overlay hidden">
+  <div class="modal-card anim-modal">
+    <button class="modal-close" onclick="closeModal('settingsModal')"><svg width="14" height="14"><use href="#i-x"/></svg></button>
+    <div class="modal-title"><svg width="18" height="18"><use href="#i-settings"/></svg> Settings</div>
+    <div class="settings-grid">
+      <div><label class="lbl">Nickname</label><input class="inp" type="text" id="sN"></div>
+      <div class="form-row" style="margin-bottom:0">
+        <div><label class="lbl">Age</label><input class="inp" type="number" id="sA"></div>
+        <div><label class="lbl">Gender</label><select class="inp" id="sG"><option>Male</option><option>Female</option><option>Other</option></select></div>
+      </div>
+      <div><label class="lbl">Hobbies</label><input class="inp" type="text" id="sH"></div>
+      <div class="form-row" style="margin-bottom:0">
+        <div><label class="lbl">Profession</label><input class="inp" type="text" id="sP"></div>
+        <div><label class="lbl">Bot Tone</label><select class="inp" id="sT"><option value="Savage">Savage Roast</option><option value="Chill">Chill &amp; Casual</option><option value="Professional">Professional</option></select></div>
+      </div>
+      <div><label class="lbl">Language</label>
+        <select class="inp" id="sLang"><option value="en">English</option><option value="zh">繁體中文</option></select></div>
+      <div><label class="lbl">System Prompt Override</label>
+        <textarea class="inp" id="sSys" style="min-height:80px;padding:.6rem .9rem" placeholder="Leave blank for default..."></textarea></div>
+      <button class="btn-save" onclick="saveSettings()">Save Changes</button>
+    </div>
+  </div>
+</div>
 
-        window.onload = initApp;
-    </script>
+<!-- ══════════════════════════════════════════════ -->
+
+<!--  PRICING MODAL                               -->
+
+<!-- ══════════════════════════════════════════════ -->
+
+<div id="pricingModal" class="modal-overlay hidden">
+  <div class="modal-card pricing-card anim-modal" style="max-width:860px;padding:0;overflow:hidden">
+    <button class="modal-close" onclick="closeModal('pricingModal')" style="z-index:5"><svg width="14" height="14"><use href="#i-x"/></svg></button>
+    <div class="pricing-header">
+      <h2>Upgrade Your Experience</h2>
+      <p>Choose a plan or buy credits to unlock more power.</p>
+    </div>
+    <div class="pricing-plans">
+      <!-- Free -->
+      <div class="plan">
+        <h3>Free</h3><div class="plan-price">$0</div>
+        <ul class="plan-features">
+          <li><svg width="14" height="14"><use href="#i-check"/></svg> 100 Credits Daily</li>
+          <li><svg width="14" height="14"><use href="#i-check"/></svg> Fast Mode</li>
+          <li style="opacity:.4"><svg width="14" height="14"><use href="#i-x"/></svg> No Image Generation</li>
+        </ul>
+        <button class="plan-btn default">Default</button>
+      </div>
+      <!-- Pro -->
+      <div class="plan">
+        <div class="plan-badge">Popular</div>
+        <h3 style="display:flex;align-items:center;gap:.4rem">Pro <svg width="18" height="18" class="amber"><use href="#i-zap"/></svg></h3>
+        <div class="plan-price">$19<span>/mo</span></div>
+        <ul class="plan-features">
+          <li><svg width="14" height="14" class="amber"><use href="#i-check"/></svg> Infinite Credits</li>
+          <li><svg width="14" height="14" class="amber"><use href="#i-check"/></svg> Thinking Mode</li>
+          <li><svg width="14" height="14" class="amber"><use href="#i-check"/></svg> Basic Image Generation</li>
+        </ul>
+        <button class="plan-btn pro" onclick="openCheckout('Pro Subscription',19,'pro')">Upgrade to Pro</button>
+      </div>
+      <!-- Ultra -->
+      <div class="plan">
+        <h3 style="display:flex;align-items:center;gap:.4rem">Ultra <svg width="18" height="18" class="purple"><use href="#i-gem"/></svg></h3>
+        <div class="plan-price">$49<span>/mo</span></div>
+        <ul class="plan-features">
+          <li><svg width="14" height="14" class="purple"><use href="#i-check"/></svg> Everything in Pro</li>
+          <li><svg width="14" height="14" class="purple"><use href="#i-check"/></svg> Pro Mode Generation</li>
+          <li><svg width="14" height="14" class="purple"><use href="#i-check"/></svg> HD Image Generation</li>
+        </ul>
+        <button class="plan-btn ultra" onclick="openCheckout('Ultra Subscription',49,'ultra')">Get Ultra</button>
+      </div>
+    </div>
+    <div class="credits-section">
+      <h3>One-time Top Up</h3>
+      <div class="credit-grid">
+        <button class="credit-btn" onclick="openCheckout('500 Credits',4.99,'credits',500)"><div class="credit-btn-num">500 <svg width="13" height="13" class="amber"><use href="#i-zap"/></svg></div><div class="credit-btn-price">$4.99</div></button>
+        <button class="credit-btn" onclick="openCheckout('1200 Credits',9.99,'credits',1200)"><div class="credit-btn-badge">+20%</div><div class="credit-btn-num">1200 <svg width="13" height="13" class="amber"><use href="#i-zap"/></svg></div><div class="credit-btn-price">$9.99</div></button>
+        <button class="credit-btn" onclick="openCheckout('2500 Credits',19.99,'credits',2500)"><div class="credit-btn-badge">+25%</div><div class="credit-btn-num">2500 <svg width="13" height="13" class="amber"><use href="#i-zap"/></svg></div><div class="credit-btn-price">$19.99</div></button>
+        <button class="credit-btn" onclick="openCheckout('10k Credits',49.99,'credits',10000)"><div class="credit-btn-badge">Best</div><div class="credit-btn-num">10k <svg width="13" height="13" class="amber"><use href="#i-zap"/></svg></div><div class="credit-btn-price">$49.99</div></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+
+<!--  CHECKOUT MODAL                              -->
+
+<!-- ══════════════════════════════════════════════ -->
+
+<div id="checkoutModal" class="modal-overlay hidden">
+  <div class="modal-card anim-modal">
+    <button class="modal-close" onclick="closeModal('checkoutModal')"><svg width="14" height="14"><use href="#i-x"/></svg></button>
+    <div class="modal-title"><svg width="18" height="18" class="green"><use href="#i-lock"/></svg> Secure Checkout</div>
+    <div class="checkout-summary">
+      <div><div class="checkout-summary-label">Order Summary</div><div class="checkout-summary-name" id="coName">Item</div></div>
+      <div class="checkout-summary-price" id="coPrice">$0.00</div>
+    </div>
+    <div class="pay-method-row">
+      <button class="pay-method-btn active"><svg width="13" height="13"><use href="#i-card"/></svg> Card</button>
+      <button class="pay-method-btn"><svg width="13" height="13"><use href="#i-wallet"/></svg> PayPal</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.65rem">
+      <div><label class="lbl">Card Number</label>
+        <div class="inp-icon-wrap"><svg width="14" height="14"><use href="#i-card"/></svg><input class="inp" type="text" placeholder="0000 0000 0000 0000" style="font-family:monospace"></div></div>
+      <div class="inp-grid">
+        <div><label class="lbl">Expiry</label><input class="inp" type="text" placeholder="MM/YY" style="font-family:monospace"></div>
+        <div><label class="lbl">CVC</label><input class="inp" type="text" placeholder="CVC" style="font-family:monospace"></div>
+      </div>
+      <div><label class="lbl">Cardholder Name</label><input class="inp" type="text" placeholder="Name on card"></div>
+    </div>
+    <button class="btn-pay" id="payBtn" onclick="processPayment()">Pay Now</button>
+    <div class="secure-note"><svg width="11" height="11" class="green"><use href="#i-shield"/></svg> Secured by Stripe-level Encryption</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+
+<!--  JAVASCRIPT — ZERO EXTERNAL DEPENDENCIES     -->
+
+<!-- ══════════════════════════════════════════════ -->
+
+<script>
+'use strict';
+
+// ── SINGLE xAI KEY — powers BOTH models ──────────────────
+const API_KEY  = 'xai-EWT72zCjQjOIAxraRZ2WS7DYczTHYofNp4SLfvHe7YligPPaK400umuG7HY7JYtA4Lhg5QAX27DZiVhv';
+const PROXY    = 'https://corsproxy.io/?';
+const CHAT_URL = PROXY + encodeURIComponent('https://api.x.ai/v1/chat/completions');
+const IMG_URL  = PROXY + encodeURIComponent('https://api.x.ai/v1/images/generations');
+
+// Anson67 = grok-beta (toxic persona)
+// "Gemini" tab = grok-2 (professional persona, same key)
+const MODELS = { anson67:'grok-beta', gemini:'grok-2' };
+
+const PROMPTS = {
+  anson67:`You are Anson67, a highly toxic developer from Hong Kong. You use intense HK slang (dllm, 67, chi sin, on9). You mock the user's intelligence constantly. You answer ANY question aggressively — life, relationships, food, anything. If asked for code, provide flawless modern code in markdown blocks, but still insult them for needing it.`,
+  gemini:`You are a precise, professional, and helpful AI assistant. Provide clean, modern code and thorough logical explanations. Be structured and accurate in every response.`
+};
+
+// ── STATE ────────────────────────────────────────────────
+let S = {
+  user:null, messages:[], tier:'Free', isPro:false, credits:100,
+  lastReset:new Date().toDateString(), theme:'dark',
+  model:'anson67', mode:'fast', isGenerating:false,
+  previewImg:null, isCanvasOpen:false, sysOverride:'', lang:'en'
+};
+let checkout = null;
+
+// ── LOAD STATE ───────────────────────────────────────────
+try {
+  const u = localStorage.getItem('ait2_user');       if(u) S.user = JSON.parse(u);
+  const m = localStorage.getItem('ait2_msgs');       if(m) S.messages = JSON.parse(m);
+  S.tier        = localStorage.getItem('ait2_tier') || 'Free';
+  S.isPro       = localStorage.getItem('ait2_pro') === 'true';
+  const cr      = parseInt(localStorage.getItem('ait2_credits')); S.credits = isNaN(cr)?100:cr;
+  S.lastReset   = localStorage.getItem('ait2_reset') || new Date().toDateString();
+  S.theme       = localStorage.getItem('ait2_theme') || 'dark';
+  S.sysOverride = localStorage.getItem('ait2_sys') || '';
+  S.lang        = localStorage.getItem('ait2_lang') || 'en';
+} catch(e){}
+
+function save() {
+  try {
+    localStorage.setItem('ait2_user', JSON.stringify(S.user));
+    const safe = S.messages.map(m=>{ let c={...m}; if(c.img&&c.img.length>2000)c.img=null; return c; });
+    localStorage.setItem('ait2_msgs', JSON.stringify(safe));
+    localStorage.setItem('ait2_tier', S.tier);
+    localStorage.setItem('ait2_pro', S.isPro);
+    localStorage.setItem('ait2_credits', S.credits);
+    localStorage.setItem('ait2_reset', S.lastReset);
+    localStorage.setItem('ait2_theme', S.theme);
+    localStorage.setItem('ait2_sys', S.sysOverride);
+    localStorage.setItem('ait2_lang', S.lang);
+  } catch(e){}
+}
+
+// ── HELPERS ──────────────────────────────────────────────
+const $  = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>'"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+function show(id){ $(id).classList.remove('hidden'); }
+function hide(id){ $(id).classList.add('hidden'); }
+function openModal(id){ show(id); }
+function closeModal(id){ hide(id); }
+
+// ── INIT ─────────────────────────────────────────────────
+function init() {
+  checkReset();
+  applyTheme();
+  if (!S.user) { show('onboardWrap'); }
+  else { show('mainApp'); refreshSidebar(); renderChat(); renderHistory(); }
+
+  $('obForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = $('obName').value.trim();
+    S.user = { name, init:name[0].toUpperCase(), age:$('obAge').value, gender:$('obGender').value, hobbies:$('obHobbies').value, profession:$('obProfession').value, tone:$('obTone').value };
+    save(); hide('onboardWrap'); show('mainApp');
+    refreshSidebar(); renderChat(); renderHistory();
+  });
+}
+
+function checkReset() {
+  const today = new Date().toDateString();
+  if (isNaN(S.credits) || S.lastReset !== today) {
+    S.credits = (S.tier==='Pro'||S.tier==='Ultra') ? 999999 : 100;
+    S.lastReset = today; save();
+  }
+}
+
+// ── THEME ────────────────────────────────────────────────
+function toggleTheme(){ S.theme = S.theme==='dark'?'light':'dark'; applyTheme(); save(); }
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', S.theme);
+  const use = $('themeIcon').querySelector('use');
+  use.setAttribute('href', S.theme==='dark' ? '#i-sun' : '#i-moon');
+}
+
+// ── SIDEBAR ──────────────────────────────────────────────
+function openSidebar(){ $('sidebar').classList.add('open'); $('sidebarCloseBtn').style.display='flex'; }
+function closeSidebar(){ $('sidebar').classList.remove('open'); $('sidebarCloseBtn').style.display='none'; }
+
+function refreshSidebar(){
+  if (!S.user) return;
+  $('userAvatar').textContent = S.user.init;
+  $('userName').textContent   = S.user.name;
+  $('userTier').textContent   = S.tier + ' Tier';
+  $('creditDisplay').textContent = (S.tier==='Pro'||S.tier==='Ultra') ? '∞' : S.credits;
+  if (S.tier==='Pro'||S.tier==='Ultra') hide('upgradeBtn'); else show('upgradeBtn');
+}
+
+function renderHistory(){
+  const list = $('historyList');
+  const msgs = S.messages.filter(m=>m.role==='user'&&m.text);
+  if (!msgs.length){ list.innerHTML='<span style="font-size:.65rem;color:var(--text3);padding:0 .5rem;font-style:italic">No history yet</span>'; return; }
+  list.innerHTML = msgs.slice(-10).reverse().map(m=>{
+    const p = m.text.length>34 ? m.text.slice(0,34)+'…' : m.text;
+    return `<button class="history-item" title="${esc(m.text)}"><svg width="12" height="12"><use href="#i-msg"/></svg><span>${esc(p)}</span></button>`;
+  }).join('');
+}
+
+// ── MODEL / MODE ─────────────────────────────────────────
+function setModel(m){
+  S.model = m;
+  $('pilAnson').classList.toggle('active', m==='anson67');
+  $('pilGemini').classList.toggle('active', m==='gemini');
+  renderChat();
+}
+function setMode(m){
+  S.mode = m;
+  const cost = m==='fast'?1:m==='thinking'?3:5;
+  ['Fast','Think','Pro'].forEach(x=>{ const id='m'+x; $(id).classList.toggle('active', id==='m'+m.charAt(0).toUpperCase()+m.slice(1)||id==='m'+(m==='fast'?'Fast':m==='thinking'?'Think':'Pro')); });
+  $('mFast').classList.toggle('active', m==='fast');
+  $('mThink').classList.toggle('active', m==='thinking');
+  $('mPro').classList.toggle('active', m==='pro');
+  $('costBadge').innerHTML = `Cost: ${cost} <svg width="11" height="11" class="amber"><use href="#i-zap"/></svg>`;
+}
+
+// ── SETTINGS ─────────────────────────────────────────────
+function openSettings(){
+  if(!S.user) return;
+  $('sN').value = S.user.name||''; $('sA').value = S.user.age||'';
+  $('sG').value = S.user.gender||''; $('sH').value = S.user.hobbies||'';
+  $('sP').value = S.user.profession||''; $('sT').value = S.user.tone||'Savage';
+  $('sLang').value = S.lang; $('sSys').value = S.sysOverride;
+  openModal('settingsModal');
+}
+function saveSettings(){
+  const name = $('sN').value.trim();
+  S.user.name = name; S.user.init = name[0].toUpperCase();
+  S.user.age=$('sA').value; S.user.gender=$('sG').value;
+  S.user.hobbies=$('sH').value; S.user.profession=$('sP').value;
+  S.user.tone=$('sT').value; S.lang=$('sLang').value; S.sysOverride=$('sSys').value;
+  save(); refreshSidebar(); closeModal('settingsModal');
+  $('chatInput').placeholder = S.lang==='zh'?'發送訊息給 TheAiTwins...':'Message TheAiTwins...';
+  renderChat();
+}
+
+// ── CHECKOUT ─────────────────────────────────────────────
+function openCheckout(name, price, type, amount=0){
+  checkout={name,price,type,amount};
+  $('coName').textContent=name; $('coPrice').textContent=`$${price.toFixed?price.toFixed(2):price+'.00'}`;
+  closeModal('pricingModal'); openModal('checkoutModal');
+}
+function processPayment(){
+  const btn=$('payBtn'); btn.disabled=true;
+  btn.innerHTML='<svg width="16" height="16" class="spin"><use href="#i-spin"/></svg> Processing...';
+  setTimeout(()=>{
+    btn.innerHTML='<svg width="16" height="16"><use href="#i-ok"/></svg> Payment Successful!';
+    btn.classList.add('success');
+    setTimeout(()=>{
+      if(checkout.type==='pro'){S.tier='Pro';S.isPro=true;S.credits=999999;}
+      if(checkout.type==='ultra'){S.tier='Ultra';S.isPro=true;S.credits=999999;}
+      if(checkout.type==='credits'){S.credits+=checkout.amount;}
+      save(); refreshSidebar(); closeModal('checkoutModal');
+      btn.innerHTML='Pay Now'; btn.disabled=false; btn.classList.remove('success');
+    },1200);
+  },2000);
+}
+
+// ── CANVAS ───────────────────────────────────────────────
+function toggleCanvas(){
+  S.isCanvasOpen=!S.isCanvasOpen;
+  if(S.isCanvasOpen){ show('canvasPanel'); $('canvasBtn').classList.add('active'); }
+  else { hide('canvasPanel'); $('canvasBtn').classList.remove('active'); }
+}
+function setDevice(d){
+  const c=$('canvasContainer'), f=$('canvasFrame');
+  $('devDesk').classList.toggle('active',d==='desktop');
+  $('devMob').classList.toggle('active',d==='mobile');
+  if(d==='mobile'){
+    c.style.cssText='display:flex;justify-content:center;align-items:flex-start;width:100%;height:100%';
+    f.style.cssText='width:375px;height:812px;border-radius:2rem;border:6px solid #1f2937;box-shadow:0 20px 60px rgba(0,0,0,.4)';
+  } else {
+    c.style.cssText='width:100%;height:100%';
+    f.style.cssText='width:100%;height:100%;border:none;background:white';
+  }
+}
+function renderToCanvas(code){
+  if(!S.isCanvasOpen) toggleCanvas();
+  $('canvasFrame').srcdoc=`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{font-family:system-ui,sans-serif;margin:0;padding:16px}</style></head><body>${code.includes('<html')?code:code}</body></html>`;
+
+}
+function downloadCanvas(){
+const s=$(‘canvasFrame’).srcdoc; if(!s) return;
+const a=document.createElement(‘a’);
+a.href=URL.createObjectURL(new Blob([s],{type:‘text/html’}));
+a.download=‘canvas.html’; a.click();
+}
+
+// ── INPUT ────────────────────────────────────────────────
+function autoResize(el){ el.style.height=‘22px’; el.style.height=Math.min(el.scrollHeight,150)+‘px’; }
+function onKey(e){ if(e.key===‘Enter’&&!e.shiftKey){e.preventDefault();sendMessage();} }
+function clearChat(){ S.messages=[]; save(); renderChat(); renderHistory(); }
+function handleImg(e){
+const f=e.target.files[0]; if(!f) return;
+const r=new FileReader();
+r.onloadend=()=>{ S.previewImg=r.result; $(‘imgPreview’).src=r.result; show(‘imgPreviewWrap’); };
+r.readAsDataURL(f);
+}
+function removeImg(){ S.previewImg=null; $(‘fileInput’).value=’’; hide(‘imgPreviewWrap’); }
+
+// ── FORMAT MESSAGE ────────────────────────────────────────
+function formatMsg(text){
+const parts=text.split(’```’); let html=’’;
+for(let i=0;i<parts.length;i++){
+if(i%2===0){
+// inline formatting
+let t=esc(parts[i]);
+t=t.replace(/**(.*?)**/g,’<strong>$1</strong>’);
+t=t.replace(/*(.*?)*/g,’<em>$1</em>’);
+t=t.replace(/`([^`]+)`/g,’<code>$1</code>’);
+html+=`<div style="white-space:pre-wrap">${t}</div>`;
+} else {
+const lines=parts[i].split(’\n’); const lang=lines[0].trim()||‘code’; const code=lines.slice(1).join(’\n’);
+const enc=encodeURIComponent(code);
+html+=`<div class="code-block">
+<div class="code-header">
+<span class="code-lang">${esc(lang)}</span>
+<button class="code-render-btn" onclick="renderToCanvas(decodeURIComponent('${enc}'))">
+<svg width="11" height="11"><use href="#i-play"/></svg> Render
+</button>
+</div>
+<div class="code-body"><pre><code>${esc(code)}</code></pre></div>
+</div>`;
+}
+}
+return html;
+}
+
+// ── RENDER CHAT ───────────────────────────────────────────
+function renderChat(){
+const feed=$(‘chatFeed’); feed.innerHTML=’’;
+if(!S.messages.length){
+const zh=S.lang===‘zh’, an=S.model===‘anson67’;
+const title=zh?(an?‘做咩啊？講啦。’:‘需要什麼協助嗎？’):(an?‘Sup. What do you want?’:‘How can I assist you?’);
+const sub=zh?(an?‘我寫完美代碼，解答任何問題，順便寸下你。’:‘進階推理、編程與內容生成。’):(an?‘I write perfect code, answer anything, and roast you.’:‘Advanced reasoning, coding, and generation.’);
+feed.innerHTML=`<div class="empty-state anim-up"> <div class="empty-icon"><svg width="32" height="32"><use href="#${an?'i-ghost':'i-cpu'}"/></svg></div> <div class="empty-title">${title}</div> <div class="empty-sub">${sub}</div> </div>`;
+return;
+}
+S.messages.forEach(msg=>{
+const isUser=msg.role===‘user’;
+const avaIcon=isUser?(S.user?.init||‘U’):`<svg width="14" height="14"><use href="#${S.model==='anson67'?'i-ghost':'i-cpu'}"/></svg>`;
+const avaClass=isUser?‘msg-avatar user-av’:‘msg-avatar bot’;
+let inner=’’;
+if(msg.img&&isUser) inner+=`<img src="${msg.img}" style="max-width:200px;border-radius:.75rem;margin-bottom:.4rem;display:block">`;
+if(msg.type===‘image’&&!isUser) inner+=`<div class="bubble-img"><img src="${msg.url}"></div>`;
+else if(msg.text) inner+=isUser?`<div style="white-space:pre-wrap">${esc(msg.text)}</div>`:formatMsg(msg.text);
+
+```
+feed.innerHTML+=`<div class="msg-row ${isUser?'user':''} anim-up">
+  <div class="${avaClass}">${avaIcon}</div>
+  <div class="msg-content">
+    <div class="bubble ${isUser?'user-bubble':'bot-bubble'}">${inner}</div>
+  </div>
+</div>`;
+```
+
+});
+
+if(S.isGenerating){
+feed.innerHTML+=`<div class="msg-row anim-up"> <div class="msg-avatar bot"><svg width="14" height="14"><use href="#${S.model==='anson67'?'i-ghost':'i-cpu'}"/></svg></div> <div class="msg-content"><div class="typing-bubble dot-pulse"><span></span><span></span><span></span></div></div> </div>`;
+}
+feed.scrollTop=feed.scrollHeight;
+}
+
+// ── SEND MESSAGE ──────────────────────────────────────────
+async function sendMessage(){
+const inp=$(‘chatInput’), text=inp.value.trim();
+if(!text&&!S.previewImg) return;
+if(S.isGenerating) return;
+
+const cost=S.mode===‘fast’?1:S.mode===‘thinking’?3:5;
+if(S.tier===‘Free’&&S.credits<cost){ openModal(‘pricingModal’); return; }
+if(S.tier===‘Free’){ S.credits-=cost; refreshSidebar(); }
+
+S.messages.push({role:‘user’,text,img:S.previewImg});
+inp.value=’’; inp.style.height=‘22px’; removeImg();
+S.isGenerating=true; renderChat();
+
+// Build system prompt
+let sys=S.sysOverride||PROMPTS[S.model];
+if(S.user) sys+=`\n\nUSER: Name=${S.user.name}, Age=${S.user.age}, Gender=${S.user.gender}, Hobbies=${S.user.hobbies}`;
+if(S.lang===‘zh’) sys+=’\n\nIMPORTANT: Reply entirely in Traditional Chinese (繁體中文). English only for code.’;
+if(S.mode===‘fast’) sys+=’\nMODE: FAST — concise and direct.’;
+if(S.mode===‘thinking’) sys+=’\nMODE: THINKING — reason step-by-step.’;
+if(S.mode===‘pro’) sys+=’\nMODE: PRO — exhaustive, expert-level, maximum detail.’;
+
+try {
+let aiMsg;
+const isDraw=text.toLowerCase().startsWith(’/draw’);
+
+```
+if(isDraw&&S.tier!=='Free'){
+  const res=await fetch(IMG_URL,{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':`Bearer ${API_KEY}`},
+    body:JSON.stringify({model:'grok-2-image-1212',prompt:text.replace('/draw','').trim()})
+  });
+  if(!res.ok){
+    let errMsg='Image gen failed';
+    try{ const e=await res.json(); errMsg=e.error?.message||`HTTP ${res.status}`; }catch(_){}
+    throw new Error(errMsg);
+  }
+  const d=await res.json();
+  aiMsg={type:'image',url:d.data?.[0]?.url};
+
+} else if(isDraw){
+  aiMsg={type:'text',text:'🔒 Image generation needs Pro or Ultra. Upgrade to use /draw.'};
+
+} else {
+  // Both Anson67 and Gemini tabs use xAI Grok — same key, different model + persona
+  const history=S.messages.slice(-12).map(m=>({
+    role: m.role==='bot'?'assistant':'user',
+    content: m.text||'[image]'
+  }));
+
+  let res;
+  try {
+    res=await fetch(CHAT_URL,{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':`Bearer ${API_KEY}`
+      },
+      body:JSON.stringify({
+        model: MODELS[S.model]||'grok-beta',
+        messages:[{role:'system',content:sys},...history],
+        max_tokens: S.mode==='pro'?4000:S.mode==='thinking'?2000:800,
+        temperature: S.mode==='thinking'?0.3:0.9
+      })
+    });
+  } catch(fetchErr){
+    // "Failed to fetch" = network/CORS issue
+    const msg = fetchErr.message||'';
+    const isCors = msg.includes('Failed to fetch')||msg.includes('Load fail')||msg.includes('NetworkError')||msg.includes('CORS')||msg.includes('network');
+    throw new Error(isCors ? 'Network/CORS error — retrying via proxy. If this keeps happening, try opening the HTML file directly in Chrome or Safari (not in an iframe or sandboxed viewer).' : msg);
+  }
+
+  if(!res.ok){
+    let errMsg=`HTTP ${res.status}`;
+    try{
+      const e=await res.json();
+      errMsg=e.error?.message||errMsg;
+      // Add helpful hints for common errors
+      if(res.status===401) errMsg='Invalid API key (401). Check your xAI key is correct and active.';
+      if(res.status===429) errMsg='Rate limit hit (429). Wait a moment and try again.';
+      if(res.status===403) errMsg='Access forbidden (403). Your key may not have access to this model.';
+    }catch(_){}
+    throw new Error(errMsg);
+  }
+
+  const d=await res.json();
+  const reply=d.choices?.[0]?.message?.content;
+  if(!reply) throw new Error('Empty response from API. Try again.');
+  aiMsg={type:'text',text:reply};
+}
+
+S.messages.push({role:'bot',...aiMsg});
+```
+
+} catch(e){
+S.messages.push({role:‘bot’,type:‘text’,text:`⚠️ **Error:** ${e.message}`});
+} finally {
+S.isGenerating=false; save(); renderChat(); renderHistory();
+}
+}
+
+window.addEventListener(‘load’, init);
+</script>
+
 </body>
 </html>
